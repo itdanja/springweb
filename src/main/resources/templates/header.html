@@ -33,7 +33,6 @@
             </ul>
             <div class="col-md-3 text-end">
                 <button type="button" class="btn btn-outline-primary me-2"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인</button>
-                <a th:href="@{/member/login}"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
                 <a th:href="@{/member/signup}"><button type="button" class="btn btn-primary">Sign-up</button> </a>
             </div>
         </header>
@@ -45,37 +44,31 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-5 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <h2 class="fw-bold mb-0">Sign up for free</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h2 class="fw-bold mb-0">Ansan</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    <!-- 닫기 버튼 -->
                 </div>
 
                 <div class="modal-body p-5 pt-0">
-                    <form class="">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control rounded-4" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email address</label>
+                            <input type="text" class="form-control rounded-4" id="m_id" placeholder="아이디">
+                            <label for="floatingInput">아이디</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control rounded-4" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
+                            <input type="password" class="form-control rounded-4" id="m_password" placeholder="비밀번호">
+                            <label for="floatingPassword">비밀번호</label>
                         </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
-                        <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+                        <div id="loginfailmsg" class="text-danger text-center m-2"></div>       <!-- 로그인 실패시 메시지 -->
+                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"  onclick="login()">로그인</button>  <!-- 로그인 버튼 -->
+
+                        <small class="text-muted px-2">아이디찾기</small>
+                        <small class="text-muted px-2">비밀번호찾기</small>
+
                         <hr class="my-4">
-                        <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
-                        <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-4" type="submit">
-                            <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter"/></svg>
-                            Sign up with Twitter
-                        </button>
-                        <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" type="submit">
-                            <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook"/></svg>
-                            Sign up with Facebook
-                        </button>
-                        <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-4" type="submit">
-                            <svg class="bi me-1" width="16" height="16"><use xlink:href="#github"/></svg>
-                            Sign up with GitHub
-                        </button>
-                    </form>
+                        <h2 class="fs-5 fw-bold mb-3"> SNS 연동 로그인</h2>      <!-- ouath2 -->
+                        <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-4" type="submit">구글 </button>
+                        <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" type="submit">카카오</button>
+                        <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-4" type="submit">네이버</button>
+
                 </div>
             </div>
         </div>

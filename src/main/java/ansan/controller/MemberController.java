@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MemberController {
@@ -30,14 +32,20 @@ public class MemberController {
         return "redirect:/";  // 회원가입 성공시 메인페이지 연결
     }
     @PostMapping("/member/logincontroller")
-    public String logincontroller(MemberDto memberDto){
+    @ResponseBody
+    public String logincontroller( @RequestBody MemberDto memberDto){
+                                             // 폼 사용시에는 자동주입 O
+                                             // AJAX 사용시에는 자동주입 X -> @RequestBody
           MemberDto loginDto =   memberService.login( memberDto );
           if( loginDto !=null ){
               System.out.println("Login success");
+              return "1";
           }else{
               System.out.println("Login fail");
+              return "2";
           }
-        return "redirect:/";
+            // 타임리프를 설치했을경우  RETRUN URL , HTML
+            // html 혹은 url 아닌 값 반환할때  @ResponseBody
     }
 
 }
