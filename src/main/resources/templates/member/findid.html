@@ -13,18 +13,20 @@
 
             <div class="col-md-6">  <!-- 아이디찾기  -->
                 <form action="/member/findidcontroller" method="post">
-                    이름 : <input type="text" name="m_name">
-                    이메일 : <input type="text" name="m_email">
-                    <input type="submit" value="아이디찾기">
+                    이름 : <input type="text" name="m_name"> <br>
+                    이메일 : <input type="text" name="m_email"> <br>
+                    <input type="submit" value="아이디찾기"> <br>
                 </form>
+                <div th:text="${findidmsg}"></div>
             </div>
 
             <div class="col-md-6">  <!-- 패스워드찾기 -->
                 <form action="/member/findpasswordcontroller" method="post">
-                    아이디 : <input type="text" name="m_id">
-                    이메일 : <input type="text" name="m_email">
-                    <input type="submit" value="아이디찾기">
+                    아이디 : <input type="text" name="m_id"> <br>
+                    이메일 : <input type="text" name="m_email"> <br>
+                    <input type="submit" value="아이디찾기"> <br>
                 </form>
+                <div th:text="${findpwmsg}"></div>
             </div>
 
         </div>

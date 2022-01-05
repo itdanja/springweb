@@ -5,6 +5,7 @@ import ansan.domain.Dto.MemberDto;
 import ansan.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,14 +75,29 @@ public class MemberController {
     }
 
     @PostMapping("/member/findidcontroller")
-    public String findid( MemberDto memberDto){
+    public String findidcontroller(MemberDto memberDto , Model model){
+        String result = memberService.findid(memberDto);
+        if( result != null ){
+            String msg = " 회원님의 아이디 : " + result ;
+            model.addAttribute("findidmsg", msg);
+        }else{
+            String msg = " 동일한 회원정보가 없습니다." ;
+            model.addAttribute("findidmsg", msg);
+        }
 
         return "/member/findid";
     }
 
     @PostMapping("/member/findpasswordcontroller")
-    public String findpassword( MemberDto memberDto ){
-
+    public String findpassword( MemberDto memberDto , Model model ){
+        boolean result = memberService.findpassword( memberDto);
+        if( result ){
+            String msg = " 해당 이메일로 임시비밀번호 발송했습니다." ;
+            model.addAttribute("findpwmsg", msg);
+        }else{
+            String msg = " 동일한 회원정보가 없습니다." ;
+            model.addAttribute("findpwmsg", msg);
+        }
         return "/member/findid";
     }
 
