@@ -32,10 +32,10 @@
                 <li><a th:href="@{/board/boardlist}" class="nav-link px-2 link-dark">커뮤니티 </a></li>
             </ul>
             <div class="col-md-3 text-end">
-                <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-primary me-2"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인</button>
-                <a th:if="${session.logindto == null }" th:href="@{/member/signup}"><button type="button" class="btn btn-primary">회원가입</button> </a>
-                <a th:if="${session.logindto != null }" th:href="@{/member/signup}"><button type="button" class="btn btn-primary">마이페이지</button> </a>
-                <a th:if="${session.logindto != null }" th:href="@{/member/logout}"><button type="button" class="btn btn-primary">로그아웃</button> </a>
+                <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인</button>
+                <a th:if="${session.logindto == null }" th:href="@{/member/signup}"><button type="button" class="btn btn-outline-info">회원가입</button></a>
+                <a th:if="${session.logindto != null }" th:href="@{/member/signup}"><button type="button" class="btn btn-outline-info">마이페이지</button></a>
+                <a th:if="${session.logindto != null }" th:href="@{/member/logout}"><button type="button" class="btn btn-outline-info">로그아웃</button></a>
             </div>
         </header>
     </div>
@@ -62,8 +62,7 @@
                         <div id="loginfailmsg" class="text-danger text-center m-2"></div>       <!-- 로그인 실패시 메시지 -->
                         <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"  onclick="login()">로그인</button>  <!-- 로그인 버튼 -->
 
-                        <small class="text-muted px-2">아이디찾기</small>
-                        <small class="text-muted px-2">비밀번호찾기</small>
+                        <a th: href="/member/findid"><small class="text-muted px-2">회원정보찾기</small></a>
 
                         <hr class="my-4">
                         <h2 class="fs-5 fw-bold mb-3"> SNS 연동 로그인</h2>      <!-- ouath2 -->

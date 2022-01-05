@@ -21,21 +21,26 @@ public class MemberController {
     @Autowired
     HttpServletRequest request; // 요청 객체    [ jsp : 내장객체(request)와 동일  ]
 
-    @GetMapping("/member/login")    // 로그인페이지 연결
+    // 로그인페이지 연결
+    @GetMapping("/member/login")
     public String login(){
         return "member/login";
     }
 
-    @GetMapping("/member/signup") // 회원가입페이지 연결
+    // 회원가입페이지 연결
+    @GetMapping("/member/signup")
     public String signup(){
         return "member/signup";
     }
+
     @PostMapping("/member/signupcontroller") // 회원가입 처리 연결
     public String signupcontroller(MemberDto memberDto){
      // 자동주입 : form 입력한 name 과 dto의 필드명 동일하면 자동주입 // 입력이 없는 필드는 초기값[ 문자=null , 숫자 = 0 ]
         memberService.membersignup(memberDto);
         return "redirect:/";  // 회원가입 성공시 메인페이지 연결
     }
+
+    // 로그인처리
     @PostMapping("/member/logincontroller")
     @ResponseBody
     public String logincontroller( @RequestBody MemberDto memberDto ){
@@ -54,10 +59,42 @@ public class MemberController {
             // html 혹은 url 아닌 값 반환할때  @ResponseBody
     }
 
+    // 로그아웃 처리
     @GetMapping("/member/logout")
     public String logout(){
         HttpSession session = request.getSession();
         session.setAttribute( "logindto" , null);   // 기존 세션을 null 로 변경
         return "redirect:/"; // 로그아웃 성공시 메인페이지로 이동
     }
+
+    // 회원정보찾기 페이지로 연결
+    @GetMapping("/member/findid")
+    public String findid(){
+        return "/member/findid";
+    }
+
+    @PostMapping("/member/findidcontroller")
+    public String findid( MemberDto memberDto){
+
+        return "/member/findid";
+    }
+
+    @PostMapping("/member/findpasswordcontroller")
+    public String findpassword( MemberDto memberDto ){
+
+        return "/member/findid";
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
