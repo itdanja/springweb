@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:replace="/header.html :: header" ></div>
+    <div class="container">
+        <h3>회원가입구역</h3>
+            <form method="post" action="/member/signupcontroller">
+                아이디 : <input type="text" name="m_id"> <br>
+                비밀번호 : <input type="text" name="m_password"> <br>
+                비밀번호 확인 : <input type="text" name=""> <br>
+                이름 : <input type="text" name="m_name"> <br>
+                성별 :  <input type="text" name="m_sex"> <br>
+                연락처 :  <input type="text" name="m_phone"> <br>
+                이메일 :  <input type="text" name="m_email"> <br>
+                주소 : <input type="text" name="m_address"> <br>
+                <input type="submit" value="등록">
+            </form>
+    </div>
+</body>
+</html>
