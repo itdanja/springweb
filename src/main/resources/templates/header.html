@@ -32,8 +32,10 @@
                 <li><a th:href="@{/board/boardlist}" class="nav-link px-2 link-dark">커뮤니티 </a></li>
             </ul>
             <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-outline-primary me-2"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인</button>
-                <a th:href="@{/member/signup}"><button type="button" class="btn btn-primary">Sign-up</button> </a>
+                <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-primary me-2"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인</button>
+                <a th:if="${session.logindto == null }" th:href="@{/member/signup}"><button type="button" class="btn btn-primary">회원가입</button> </a>
+                <a th:if="${session.logindto != null }" th:href="@{/member/signup}"><button type="button" class="btn btn-primary">마이페이지</button> </a>
+                <a th:if="${session.logindto != null }" th:href="@{/member/logout}"><button type="button" class="btn btn-primary">로그아웃</button> </a>
             </div>
         </header>
     </div>

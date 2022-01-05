@@ -10,11 +10,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class MemberController {
 
     @Autowired
     MemberService memberService ;
+    @Autowired
+    HttpServletRequest request; // 요청 객체    [ jsp : 내장객체(request)와 동일  ]
 
     @GetMapping("/member/login")    // 로그인페이지 연결
     public String login(){
@@ -33,19 +38,26 @@ public class MemberController {
     }
     @PostMapping("/member/logincontroller")
     @ResponseBody
-    public String logincontroller( @RequestBody MemberDto memberDto){
+    public String logincontroller( @RequestBody MemberDto memberDto ){
                                              // 폼 사용시에는 자동주입 O
                                              // AJAX 사용시에는 자동주입 X -> @RequestBody
           MemberDto loginDto =   memberService.login( memberDto );
           if( loginDto !=null ){
-              System.out.println("Login success");
+              HttpSession session = request.getSession();   // 서버내 세션 가져오기
+              session.setAttribute( "logindto" , loginDto );    // 세션 설정
+              // session.getAttribute("logindto") ; // 세션 호출
               return "1";
           }else{
-              System.out.println("Login fail");
               return "2";
           }
             // 타임리프를 설치했을경우  RETRUN URL , HTML
             // html 혹은 url 아닌 값 반환할때  @ResponseBody
     }
 
+    @GetMapping("/member/logout")
+    public String logout(){
+        HttpSession session = request.getSession();
+        session.setAttribute( "logindto" , null);   // 기존 세션을 null 로 변경
+        return "redirect:/"; // 로그아웃 성공시 메인페이지로 이동
+    }
 }
