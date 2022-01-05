@@ -1,0 +1,26 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.2'               // 1. 스프링부트 버전 설정
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' // 2. 스프링부트 의존성 관리 버전 설정
+    id 'java'
+}
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {  // 의존성 [ 라이브러리 추가 하는 공간 ]
+    implementation 'org.springframework.boot:spring-boot-starter-web'       // 3. 스프링부트 제공
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' // 3. 스프링부트 테스트모드 제공
+    compileOnly 'org.projectlombok:lombok'  // 4. 롬복 라이브러리 제공
+    annotationProcessor 'org.projectlombok:lombok' // 4. 롬복 연결 라이브러리 제공
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 5.타임리프 라이브러리 제공
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // 6. JPA 라이브러리 제공
+    runtimeOnly 'mysql:mysql-connector-java' // 7.MYSQL 라이브러리 제공
+}
+
+test {
+    useJUnitPlatform()
+}
