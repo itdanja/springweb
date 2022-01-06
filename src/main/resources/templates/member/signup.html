@@ -7,19 +7,61 @@
 <body>
 
     <div th:replace="/header.html :: header" ></div>
+
+    <script th:src = "@{/js/signup.js}"></script>
+
     <div class="container">
-        <h3>회원가입구역</h3>
-            <form method="post" action="/member/signupcontroller">
-                아이디 : <input type="text" name="m_id"> <br>
-                비밀번호 : <input type="text" name="m_password"> <br>
-                비밀번호 확인 : <input type="text" name=""> <br>
-                이름 : <input type="text" name="m_name"> <br>
-                성별 :  <input type="text" name="m_sex"> <br>
-                연락처 :  <input type="text" name="m_phone"> <br>
-                이메일 :  <input type="text" name="m_email"> <br>
-                주소 : <input type="text" name="m_address"> <br>
-                <input type="submit" value="등록">
+
+        <div class="col-md-5">
+            <form  method="post" action="/member/signupcontroller">
+                <h3> Ansan 회원가입 </h3>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="m_id" name="m_id" placeholder="아이디">
+                    <label for="floatingInput" id="idcheck">아이디</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control rounded-4" id="m_password" name="m_password" placeholder="비밀번호">
+                    <label for="floatingInput" id="passwordcheck" >비밀번호</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control rounded-4" id="m_passwordconfirm" name="m_passwordconfirm" placeholder="비밀번호확인">
+                    <label for="floatingInput">비밀번호확인</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="m_name" name="m_name" placeholder="이름">
+                    <label for="floatingInput"  id="namecheck" >이름</label>
+                </div>
+
+                <div class=" mb-3 text-center ">
+                    <input type="radio"  name="m_sex" id="m_sex1" value="남" checked="checked">남자
+                    <input type="radio"  name="m_sex" d="m_sex2"  value="여" >여자
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="m_phone" name="m_phone" placeholder="연락처">
+                    <label for="floatingInput" id="phonecheck">연락처</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="m_email" name="m_email" placeholder="이메일">
+                    <label for="floatingInput" id="emailcheck">이메일</label>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4"> <input type="text" id="sample4_postcode" class="form-control" placeholder="우편번호" name="address1"> </div>
+                    <div class="col-md-5"> <input type="text" id="sample4_roadAddress" class="form-control"  placeholder="도로명주소" name="address2"> </div>
+                    <div class="col-md-3">  <input type="button" onclick="sample4_execDaumPostcode()" class="form-control" value="주소검색"> </div>
+                </div>
+                <input type="text" id="sample4_jibunAddress" class="form-control"  placeholder="지번주소" name="address3">
+                <input type="text" id="sample4_detailAddress" class="form-control"  placeholder="상세주소" name="address4">
+
+                <input  type="submit" class="form-control p-3 my-3" value="회원가입" >
+
             </form>
+        </div>
     </div>
 </body>
 </html>

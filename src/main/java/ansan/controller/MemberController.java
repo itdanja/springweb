@@ -6,10 +6,7 @@ import ansan.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,9 +31,19 @@ public class MemberController {
         return "member/signup";
     }
 
-    @PostMapping("/member/signupcontroller") // 회원가입 처리 연결
-    public String signupcontroller(MemberDto memberDto){
-     // 자동주입 : form 입력한 name 과 dto의 필드명 동일하면 자동주입 // 입력이 없는 필드는 초기값[ 문자=null , 숫자 = 0 ]
+    // 회원가입 처리 연결
+    @PostMapping("/member/signupcontroller")
+    public String signupcontroller(MemberDto memberDto ,
+                                   @RequestParam("address1") String address1 ,
+                                   @RequestParam("address2") String address2 ,
+                                   @RequestParam("address3") String address3 ,
+                                   @RequestParam("address4") String address4 ){
+
+
+        memberDto.setM_address( address1+"/"+address2+"/"+address3+"/"+address4 );
+
+        System.out.println( memberDto);
+        // 자동주입 : form 입력한 name 과 dto의 필드명 동일하면 자동주입 // 입력이 없는 필드는 초기값[ 문자=null , 숫자 = 0 ]
         memberService.membersignup(memberDto);
         return "redirect:/";  // 회원가입 성공시 메인페이지 연결
     }
@@ -99,6 +106,18 @@ public class MemberController {
             model.addAttribute("findpwmsg", msg);
         }
         return "/member/findid";
+    }
+
+    // 아이디 중복체크
+    @GetMapping("/member/idcheck")
+    @ResponseBody
+    public String idcheck( @RequestParam("m_id") String m_id ){
+        boolean result = memberService.idcheck( m_id);
+        if( result ){
+            return "1"; // 중복
+        }else{
+            return "2"; // 중복x
+        }
     }
 
 

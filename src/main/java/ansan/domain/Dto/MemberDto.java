@@ -31,7 +31,7 @@ public class MemberDto {
                         .m_phone( this.m_phone)
                         .m_email( this.m_email)
                         .m_point( this.m_point)
+                        .m_address( this.m_address)
                         .m_grade( this.getM_grade()).build();
     }
-
 }
