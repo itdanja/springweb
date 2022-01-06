@@ -3,6 +3,8 @@ package ansan.domain.Dto;
 import ansan.domain.Entity.Member.MemberEntity;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor // 빈생성자
 @AllArgsConstructor // 풀생성자
 @Getter@Setter  // get / set 메소드
@@ -20,6 +22,7 @@ public class MemberDto {
     private String m_address; // 회원주소
     private int m_point; // 회원포인트
     private String m_grade; // 회원등급
+    private LocalDateTime m_createdDate; // 회원 가입일
 
     // Dto -> entity
     public MemberEntity toentity(){

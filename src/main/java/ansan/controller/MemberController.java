@@ -131,6 +131,38 @@ public class MemberController {
             return "2"; // 중복x
         }
     }
+
+    // 마이페이지 연결
+    @GetMapping("/member/info")
+    public String emailcheck( Model model ){
+        // 1. 로그인 세션 호출
+        HttpSession session = request.getSession();
+        MemberDto loginDto
+                = (MemberDto) session.getAttribute("logindto");
+        // 2. 세션에 회원번호를 service 에 전달해서 동일한 회원번호에 회원정보 가져오기
+       MemberDto memberDto = memberService.getmemberDto( loginDto.getM_num() );
+        // 3. 찾은 회원정보를 model 인터페이스를 이용한 view 전달하기
+        model.addAttribute( "memberDto" , memberDto);
+        return "member/info";
+    }
+
+    // 회원삭제 처리
+    @GetMapping("/member/mdelete")
+    @ResponseBody
+    public int mdelete(
+            @RequestParam("passwordconfirm") String passwordconfirm ){
+
+        // 1. 세션 호출
+        HttpSession session = request.getSession();
+        MemberDto memberDto = (MemberDto) session.getAttribute("logindto");
+        // 2. service에 로그인된 회원번호 , 확인패스워드
+        boolean result =  memberService.delete( memberDto.getM_num() , passwordconfirm );
+        // 3. 결과 를 ajax에게 응답
+        if( result ){ return 1;}
+        else{return 2;}
+
+    }
+
 }
 
 

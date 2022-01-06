@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -130,6 +131,40 @@ public class MemberService {
             }
         }
         return false; // 중복 없음
+    }
+
+    // 회원번호 -> 회원정보 반환
+    public MemberDto getmemberDto( int m_num ){
+        // memberRepository.findAll(); : 모든 엔티티 호출
+        // memberRepository.findById( pk값 ) : 해당 pk값의 엔티티 호출
+        // 1. 해당 회원번호[pk] 만 엔티티 호출
+        Optional<MemberEntity> entityOptional = memberRepository.findById(m_num);
+        // 2. 찾은 entity를 dto 변경후 반환 [ 패스워드 , 수정날짜 제외 ]
+        return MemberDto.builder()
+                .m_id( entityOptional.get().getM_id() )
+                .m_name( entityOptional.get().getM_name() )
+                .m_address( entityOptional.get().getM_address() )
+                .m_email( entityOptional.get().getM_email() )
+                .m_grade( entityOptional.get().getM_grade() )
+                .m_phone( entityOptional.get().getM_phone() )
+                .m_point( entityOptional.get().getM_point() )
+                .m_sex( entityOptional.get().getM_sex() )
+                .m_createdDate( entityOptional.get().getCreatedDate() )
+                .build();
+    }
+
+    @Transactional
+    public boolean delete( int m_num , String passwordconfirm ){
+        // 1. 로그인된 회원번호의 엔티티[레코드] 호출
+        Optional<MemberEntity> entityOptional = memberRepository.findById(m_num);
+            // Optional 클래스 :  null 포함 객체 저장
+        // 2. 해당 엔티티내 패스워드가 확인패스워드와 동일하면
+        if( entityOptional.get().getM_password().equals( passwordconfirm) ){
+            // Optional 클래스 -> memberEntity.get()  :  Optional 내 객체 호출
+            memberRepository.delete( entityOptional.get() );
+            return true;    // 회원탈퇴
+        }
+        return false;  // 회원탈퇴 X
     }
 
 }
