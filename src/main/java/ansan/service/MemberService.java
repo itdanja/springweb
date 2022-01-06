@@ -118,6 +118,20 @@ public class MemberService {
         return false; // 중복 없음
     }
 
+    // 이메일 중복체크
+    public boolean emailcheck( String email ){
+        // 1. 모든 엔티티 가져오기
+        List<MemberEntity> memberEntities =  memberRepository.findAll();
+        // 2. 모든 엔티티 반복문 돌려서 엔티티 하나씩 가쟈오기
+        for( MemberEntity memberEntity : memberEntities ) {
+            // 3. 해당 엔티티가 입력한 아이디와 동일하면
+            if (memberEntity.getM_email().equals(email)) {
+                return true; // 중복
+            }
+        }
+        return false; // 중복 없음
+    }
+
 }
 
 

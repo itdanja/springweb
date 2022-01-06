@@ -86,10 +86,20 @@ $( function(){
                   $("#emailcheck").html("이메일 형식으로 입력해주세요");
 
                   }else{
-                       $("#emailcheck").html("사용 가능한 이메일 입니다.");
+                      // 이메일 중복체크 비동기 통신
+                              $.ajax({
+                                 url : "/member/emailcheck" ,
+                                 data :{ "m_email" : m_email } ,
+                                 success : function( result ){
+                                       if( result == 1 ){
+                                          $("#emailcheck").html("현재 사용중인 이메일 입니다.");
+                                       }else{
+                                           $("#emailcheck").html("사용 가능한 에메일 입니다.");
+                                       }
+                                   } // success send
+                             }); // ajax 함수  endㅌ
                   }
         });
-
 
 }); // 함수 end
 
