@@ -20,9 +20,7 @@ dependencies {  // 의존성 [ 라이브러리 추가 하는 공간 ]
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // 6. JPA 라이브러리 제공
     runtimeOnly 'mysql:mysql-connector-java' // 7.MYSQL 라이브러리 제공
     developmentOnly 'org.springframework.boot:spring-boot-devtools' // 8. 자동 빌드[재시작] 라이브러리 제공
-    //implementation 'org.springframework.boot:spring-boot-starter-mail' // 9. 자바메일 라이브러리
     implementation "com.h2database:h2"
-    //implementation group: 'com.zaxxer', name: 'HikariCP', version: '2.3.2'
 
 }
 
