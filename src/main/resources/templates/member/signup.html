@@ -12,9 +12,35 @@
 
     <div class="container">
 
-        <div class="col-md-5">
+        <div class="row">
+            <div class="col-md-5 mx-3 border p-3 rounded-3 shadow p-3 mb-5 bg-body rounded  ">
+                <h3> SNS 연동 회원가입 </h3>
+                <button>구글 로그인</button>  <button>카카오 로그인</button> <button>네이버 로그인</button>
+                <hr>
+                <h3> *회원가입 약관 </h3>
+                <textarea  class="form-control" rows="8"  style="resize: none;">
+                    동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용
+                    동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용
+                    동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용
+                    동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용
+                    동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용동의서내용
+                </textarea>
+                    <input type="checkbox" class="m-3" name="signupsign"> *회원가입 약관 동의 합니다 .*
+                <hr>
+                <h3> *개인정보처리방침 </h3>
+                <textarea  class="form-control" rows="8" style="resize: none;">
+                    개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침
+                    개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침
+                    개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침
+                    개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침
+                    개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침개인정보처리방침
+                </textarea>
+                    <input type="checkbox" class="m-3" name="infosign" > *개인정보처리방침 동의 합니다.*
+            </div>
+
+        <div class="col-md-5 offset-1 border p-3 rounded-3 shadow p-3 mb-5 bg-body rounded  ">
             <form  method="post" action="/member/signupcontroller">
-                <h3> Ansan 회원가입 </h3>
+                <h3 class="text-center"> Ansan 회원가입 </h3>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control rounded-4" id="m_id" name="m_id" placeholder="아이디">
                     <label for="floatingInput" id="idcheck">아이디</label>
@@ -59,9 +85,9 @@
                 <input type="text" id="sample4_detailAddress" class="form-control"  placeholder="상세주소" name="address4"  >
                 <div class="text-center" id="addresscheck"></div>
                 <input id="formsubmit"  type="button" class="form-control p-3 my-3" value="회원가입">
-
             </form>
         </div>
+    </div>
     </div>
 </body>
 </html>

@@ -122,7 +122,13 @@ $( function(){
 
            $("#formsubmit").click( function(){
 
-                if(  $("#idcheck").html() != "사용가능" ){
+                if( ! $('input[name=signupsign]').is(":checked") ) {
+                     alert(" 회원가입 약관 동의시 회원가입이 가능합니다 . ");
+                }
+                else if( ! $('input[name=infosign]').is(":checked") ) {
+                     alert(" 개인정보처리방침 동의시 회원가입이 가능합니다 . ");
+                }
+                else if(  $("#idcheck").html() != "사용가능" ){
                     alert(" 아이디가 불가능합니다 . ");
                 }else if(  $("#passwordcheck").html() != "사용가능" ){
                      alert(" 패스워드 불가능합니다 . ");
