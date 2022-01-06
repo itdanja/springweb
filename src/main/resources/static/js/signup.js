@@ -7,7 +7,6 @@ $( function(){
 
         if( !idj.test( m_id ) ){    // 정규 표현식이 다를경우
             $("#idcheck").html("영소문자 5~15 글자만 가능합니다.");
-
         }else{
             // 아이디중복체크 비동기 통신
             $.ajax({
@@ -16,9 +15,8 @@ $( function(){
                success : function( result ){
                      if( result == 1 ){
                         $("#idcheck").html("현재 사용중인 아이디 입니다.");
-
                      }else{
-                         $("#idcheck").html("사용 가능한 아이디 입니다.");
+                         $("#idcheck").html("사용가능");
                      }
                  } // success send
            }); // ajax 함수  end
@@ -34,7 +32,7 @@ $( function(){
                  $("#passwordcheck").html("영대소문자+숫자+특수문자[ !@#$%^&*()+|= ] 8~15포함");
 
             }else{
-                 $("#passwordcheck").html("사용 가능한 비밀번호 입니다.");
+                 $("#passwordcheck").html("사용가능");
             }
     });
 
@@ -51,7 +49,7 @@ $( function(){
                      $("#passwordcheck").html("서로 패스워드가 다릅니다.");
 
                 }else{
-                     $("#passwordcheck").html("사용 가능한 비밀번호 입니다.");
+                     $("#passwordcheck").html("사용가능");
                 }
         });
 
@@ -63,7 +61,7 @@ $( function(){
                  $("#namecheck").html("영대문자/한글 1~15 허용");
 
             }else{
-                 $("#namecheck").html("사용 가능한 이름 입니다.");
+                 $("#namecheck").html("사용가능");
             }
         });
 
@@ -75,7 +73,7 @@ $( function(){
                    $("#phonecheck").html("01X-XXXX-XXXX 형식으로 입력해주세요");
 
               }else{
-                   $("#phonecheck").html("사용 가능한 연락처 입니다.");
+                   $("#phonecheck").html("사용가능");
               }
         });
          // 이메일 유효성검사
@@ -94,12 +92,56 @@ $( function(){
                                        if( result == 1 ){
                                           $("#emailcheck").html("현재 사용중인 이메일 입니다.");
                                        }else{
-                                           $("#emailcheck").html("사용 가능한 에메일 입니다.");
+                                           $("#emailcheck").html("사용가능");
                                        }
                                    } // success send
-                             }); // ajax 함수  endㅌ
+                             }); // ajax 함수  end
                   }
         });
+        // 주소에 / 입력 제한
+         $("#sample4_postcode").keyup( function(){
+                var address1 = $("#sample4_postcode").val();
+                if(  address1.indexOf("/") != -1 ){ $("#addresscheck").html(" 주소에 '/' 특수문자 포함 불가 "); return false;   }
+                if( address1 != null ) {  $("#addresscheck").html("사용가능"); }
+         });
+         $("#sample4_roadAddress").keyup( function(){
+                  var address2 = $("#sample4_roadAddress").val();
+                    if(  address2.indexOf("/") != -1 ){  $("#addresscheck").html("주소에 '/' 특수문자 포함 불가 "); return false;     }
+                    if( address2 != null ) {  $("#addresscheck").html("사용가능"); }
+         });
+         $("#sample4_jibunAddress").keyup( function(){
+                  var address3 = $("#sample4_jibunAddress").val();
+                    if(  address3.indexOf("/") != -1 ){  $("#addresscheck").html(" 주소에  '/' 특수문자 포함 불가 "); return false;     }
+                    if( address3 != null ) {  $("#addresscheck").html("사용가능"); }
+           });
+         $("#sample4_detailAddress").keyup( function(){
+                   var address4 = $("#sample4_detailAddress").val();
+                     if(  address4.indexOf("/") != -1 ){ $("#addresscheck").html("주소에  '/' 특수문자 포함 불가 "); return false;     }
+                    if( address4 != null ) {  $("#addresscheck").html("사용가능"); }
+          });
+
+           $("#formsubmit").click( function(){
+
+                if(  $("#idcheck").html() != "사용가능" ){
+                    alert(" 아이디가 불가능합니다 . ");
+                }else if(  $("#passwordcheck").html() != "사용가능" ){
+                     alert(" 패스워드 불가능합니다 . ");
+                 }
+                 else if(  $("#namecheck").html() != "사용가능" ){
+                     alert(" 이름 불가능합니다 . ");
+                  }
+                  else if(  $("#phonecheck").html() != "사용가능" ){
+                        alert(" 연락처가 불가능합니다 . ");
+                   }
+                   else if(   $("#emailcheck").html() != "사용가능" ){
+                         alert(" 이메일 불가능합니다 . ");
+                   }else if(   $("#addresscheck").html() != "사용가능" ){
+                             alert(" 주소소 불가합니다 . ");
+                     }else{
+                        $("form").submit(); // 모든 유효성검사 통과시 폼 전송
+                     }
+           });
+
 
 }); // 함수 end
 

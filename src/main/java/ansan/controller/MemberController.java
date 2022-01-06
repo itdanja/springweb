@@ -120,7 +120,7 @@ public class MemberController {
         }
     }
 
-    // 아이디 중복체크
+    // 이메일 중복체크
     @GetMapping("/member/emailcheck")
     @ResponseBody
     public String emailcheck( @RequestParam("m_email") String m_id ){
