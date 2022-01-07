@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="header">
+<html lang="en" th:fragment="header" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -69,7 +69,7 @@
                         <hr class="my-4">
                         <h2 class="fs-5 fw-bold mb-3"> SNS 연동 로그인</h2>      <!-- ouath2 -->
                         <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-4" type="submit">구글 </button>
-                        <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" type="submit">카카오</button>
+                        <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=7dc37d88ec2a5f582f8261fb80980d3c&redirect_uri=http://localhost:8080/kakao/code"> <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" type="submit">카카오</button></a>
                         <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-4" type="submit">네이버</button>
 
                 </div>
