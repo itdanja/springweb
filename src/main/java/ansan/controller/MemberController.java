@@ -151,7 +151,6 @@ public class MemberController {
     @ResponseBody
     public int mdelete(
             @RequestParam("passwordconfirm") String passwordconfirm ){
-
         // 1. 세션 호출
         HttpSession session = request.getSession();
         MemberDto memberDto = (MemberDto) session.getAttribute("logindto");

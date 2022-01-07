@@ -1,7 +1,5 @@
 function mdelete(){
-
     var passwordconfirm = $("#passwordconfirm").val();
-
     $.ajax({
         url: "/member/mdelete" ,
         data : { "passwordconfirm" : passwordconfirm } ,

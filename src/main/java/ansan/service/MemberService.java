@@ -166,7 +166,6 @@ public class MemberService {
         }
         return false;  // 회원탈퇴 X
     }
-
 }
 
 
