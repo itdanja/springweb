@@ -22,12 +22,12 @@ public class BoardController {
 
         ArrayList<BoardDto> boardDtos = boardService.boardlist();
         model.addAttribute( "BoardDtos" , boardDtos  );
-        return "/board/boardlist" ;  // 타임리프 를 통한 html 반환
+        return "board/boardlist" ;  // 타임리프 를 통한 html 반환
 
     }
     @GetMapping("/board/boardwrite")
     public String boardwrite(){
-        return "/board/boardwrite";
+        return "board/boardwrite";
     }
     @PostMapping("/board/boardwritecontroller")
     public String boardwritecontroller(BoardDto boardDto){

@@ -78,7 +78,7 @@ public class MemberController {
     // 회원정보찾기 페이지로 연결
     @GetMapping("/member/findid")
     public String findid(){
-        return "/member/findid";
+        return "member/findid";
     }
 
     @PostMapping("/member/findidcontroller")
@@ -92,7 +92,7 @@ public class MemberController {
             model.addAttribute("findidmsg", msg);
         }
 
-        return "/member/findid";
+        return "member/findid";
     }
 
     @PostMapping("/member/findpasswordcontroller")
@@ -105,7 +105,7 @@ public class MemberController {
             String msg = " 동일한 회원정보가 없습니다." ;
             model.addAttribute("findpwmsg", msg);
         }
-        return "/member/findid";
+        return "member/findid";
     }
 
     // 아이디 중복체크
