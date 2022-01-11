@@ -11,16 +11,17 @@ import java.time.LocalDateTime;
 public class BoardDto {
     private int b_num;
     private String b_title;
-    private String b_contetns;
+    private String b_contents;
     private String b_write;
     private String b_createdDate;
     private int b_view;
+
 
     // dto -> entity 메소드
     public BoardEntity toentity(){
         return BoardEntity.builder()
                 .b_title( this.b_title )
-                .b_contetns(this.b_contetns )
+                .b_contents(this.b_contents )
                 .b_write( this.b_write).
                 build();
     }

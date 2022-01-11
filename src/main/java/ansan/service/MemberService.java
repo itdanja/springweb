@@ -133,20 +133,20 @@ public class MemberService {
 
     // 회원번호 -> 회원정보 반환
     public MemberDto getmemberDto( int m_num ){
-        // memberRepository.findAll(); : 모든 엔티티 호출
-        // memberRepository.findById( pk값 ) : 해당 pk값의 엔티티 호출
-        // 1. 해당 회원번호[pk] 만 엔티티 호출
-        Optional<MemberEntity> entityOptional = memberRepository.findById(m_num);
-        // 2. 찾은 entity를 dto 변경후 반환 [ 패스워드 , 수정날짜 제외 ]
-        return MemberDto.builder()
-                .m_id( entityOptional.get().getM_id() )
-                .m_name( entityOptional.get().getM_name() )
-                .m_address( entityOptional.get().getM_address() )
-                .m_email( entityOptional.get().getM_email() )
-                .m_grade( entityOptional.get().getM_grade() )
-                .m_phone( entityOptional.get().getM_phone() )
-                .m_point( entityOptional.get().getM_point() )
-                .m_sex( entityOptional.get().getM_sex() )
+            // memberRepository.findAll(); : 모든 엔티티 호출
+            // memberRepository.findById( pk값 ) : 해당 pk값의 엔티티 호출
+            // 1. 해당 회원번호[pk] 만 엔티티 호출
+            Optional<MemberEntity> entityOptional = memberRepository.findById(m_num);
+            // 2. 찾은 entity를 dto 변경후 반환 [ 패스워드 , 수정날짜 제외 ]
+            return MemberDto.builder()
+                    .m_id( entityOptional.get().getM_id() )
+                    .m_name( entityOptional.get().getM_name() )
+                    .m_address( entityOptional.get().getM_address() )
+                    .m_email( entityOptional.get().getM_email() )
+                    .m_grade( entityOptional.get().getM_grade() )
+                    .m_phone( entityOptional.get().getM_phone() )
+                    .m_point( entityOptional.get().getM_point() )
+                    .m_sex( entityOptional.get().getM_sex() )
                 .m_createdDate( entityOptional.get().getCreatedDate() )
                 .build();
     }

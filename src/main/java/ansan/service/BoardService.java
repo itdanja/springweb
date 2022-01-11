@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -55,10 +56,10 @@ public class BoardService {
             BoardDto boardDto = new BoardDto(
                     boardEntity.getB_num() ,
                     boardEntity.getB_title() ,
-                    boardEntity.getB_contetns(),
+                    boardEntity.getB_contents(),
                     boardEntity.getB_write() ,
                     date ,
-                    boardEntity.getB_view() );
+                    boardEntity.getB_view());
             boardDtos.add( boardDto ); //  리스트에 저장
         }
         return boardDtos;
@@ -75,18 +76,16 @@ public class BoardService {
         return BoardDto.builder()
                 .b_num( entityOptional.get().getB_num())
                         .b_title( entityOptional.get().getB_title())
-                                .b_contetns( entityOptional.get().getB_contetns())
+                                .b_contents( entityOptional.get().getB_contents())
                                         .b_write( entityOptional.get().getB_write())
                                                 .b_view( entityOptional.get().getB_view())
                                                         .b_createdDate( date  )
                 .build();
 
     }
-
+    // 게시물 삭제 처리
     public boolean delete( int b_num ){
-
         Optional<BoardEntity> entityOptional = boardRepository.findById(b_num);
-
         if( entityOptional.get() != null ) {
             boardRepository.delete(entityOptional.get());
             return true;
@@ -96,6 +95,24 @@ public class BoardService {
         }
     }
 
+    // 게시물 수정 처리
+    @Transactional // 수정중 오류 발생시 rollback : 취소
+    public boolean update( BoardDto boardDto ){
+        try {
+            // 1. 수정할 엔티티 찾는다
+            Optional<BoardEntity> entityOptional = boardRepository.findById(boardDto.getB_num());
+            // 2. 엔티티를 수정한다
+            entityOptional.get().setB_title( boardDto.getB_title());
+            entityOptional.get().setB_contents( boardDto.getB_contents());
+
+            return true;
+        }
+        catch ( Exception e ){
+
+            System.out.println( e );
+            return false;
+        }
+    }
 
 }
 

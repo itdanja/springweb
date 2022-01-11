@@ -20,13 +20,14 @@ public class BoardEntity extends BaseTimeEntity {
     @Column(name = "b_title")
     private String b_title;
 
-    @Column(name = "b_contetns")
-    private String b_contetns;
+    @Column(name = "b_contents")
+    private String b_contents;
 
     @Column(name = "b_write")
     private String b_write;
 
     @Column(name = "b_view")
     private int b_view;
+
 
 }

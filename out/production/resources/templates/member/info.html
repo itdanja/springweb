@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:replace="header.html :: header" ></div>
+
+    <script th:src = "@{/js/info.js}"></script>
+
+    <div class="container">
+
+         <h3> 마이 페이지 </h3>
+                <div class="row">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-md-3">
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                        <span class="fs-4">Sidebar</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                                회원 정보
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                                Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                                Customers
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>mdo</strong>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <h3> 회원정보 </h3>
+
+                    <table class="table">
+                            <tr> <td>아이디</td><td th:text="${memberDto.getM_id}"></td> </tr>
+                            <tr> <td>이름</td><td th:text="${memberDto.getM_name}"></td> </tr>
+                            <tr> <td>주소</td><td th:text="${memberDto.getM_address}"></td> </tr>
+                            <tr> <td>이메일</td><td th:text="${memberDto.getM_email}"></td> </tr>
+                            <tr> <td>회원등급</td><td>서비스준비중</td> </tr>
+                            <tr> <td>연락처</td><td th:text="${memberDto.getM_phone}"></td> </tr>
+                            <tr> <td>포인트</td><td th:text="${memberDto.getM_point}"></td> </tr>
+                            <tr> <td>성별</td><td th:text="${memberDto.getM_sex}"></td> </tr>
+                            <tr> <td>가입날짜</td><td th:text="${memberDto.getM_createdDate}"></td> </tr>
+                    </table>
+
+                    <button  data-bs-toggle="modal" data-bs-target="#modalmdelete"> 회원탈퇴 </button>
+                    <div class="modal fade" tabindex="-1" id="modalmdelete" data-bs-keyboard="false" data-bs-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content rounded-4 shadow">
+                                <div class="modal-body p-4 text-center">
+                                    <h5 class="mb-0"> 회원탈퇴 </h5>
+                                    <p class="mb-3" id="deletemsg"> 회원탈퇴시 포인트 사라집니다. 환불불가 !!! </p>
+                                    <input type="password" placeholder="비밀번호 확인" class="form-control" id="passwordconfirm">
+                                </div>
+                                <div class="modal-footer flex-nowrap p-0">
+                                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" onclick="mdelete()"><strong> 탈퇴 합니다.</strong></button>
+                                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal"> 탈퇴 취소합니다. </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

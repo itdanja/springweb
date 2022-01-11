@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Controller
@@ -37,7 +40,7 @@ public class BoardController {
 
     // 게시물 쓰기 처리
     @PostMapping("/board/boardwritecontroller")
-    public String boardwritecontroller(BoardDto boardDto){
+    public String boardwritecontroller(  BoardDto boardDto) {
 
         // 세션 선언
         HttpSession session = request.getSession();
@@ -71,6 +74,26 @@ public class BoardController {
 
     }
 
+    // @GetMapping( "/board/boardupdate/{변수}/{변수}/{변수}" )
+    // 수정페이지 이동
+    @GetMapping( "/board/boardupdate/{b_num}")
+    public String boardupdate( @PathVariable("b_num") int b_num , Model model ){
+
+        BoardDto boardDto = boardService.getboard( b_num );
+        model.addAttribute("boardDto" , boardDto );
+
+        return "board/boardupdate"; // html 열기
+    }
+    // 수정 처리
+    @PostMapping("/board/boardcontroller")
+    public String boardcontroller( BoardDto boardDto ){
+
+        System.out.println( boardDto.getB_num() );
+
+        boolean result =  boardService.update( boardDto );
+
+        return "main";
+    }
 
 
 }
