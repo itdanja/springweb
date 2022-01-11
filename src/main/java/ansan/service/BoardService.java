@@ -83,6 +83,19 @@ public class BoardService {
 
     }
 
+    public boolean delete( int b_num ){
+
+        Optional<BoardEntity> entityOptional = boardRepository.findById(b_num);
+
+        if( entityOptional.get() != null ) {
+            boardRepository.delete(entityOptional.get());
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
 }
 

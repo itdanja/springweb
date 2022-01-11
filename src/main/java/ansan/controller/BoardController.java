@@ -6,9 +6,7 @@ import ansan.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -61,6 +59,16 @@ public class BoardController {
 
         return "board/boardview";
                 // 타임리프를 이용한 html 반환
+    }
+    // 게시물 삭제 처리
+    @GetMapping("/board/boarddelete")
+    @ResponseBody
+    public int boarddelete( @RequestParam("b_num") int b_num ){
+
+        boolean result = boardService.delete( b_num );
+        if( result ){ return 1; }
+        else{ return 2; }
+
     }
 
 
