@@ -59,7 +59,8 @@ public class BoardService {
                     boardEntity.getB_contents(),
                     boardEntity.getB_write() ,
                     date ,
-                    boardEntity.getB_view());
+                    boardEntity.getB_view() ,
+                    boardEntity.getB_img() );
             boardDtos.add( boardDto ); //  리스트에 저장
         }
         return boardDtos;
@@ -79,6 +80,7 @@ public class BoardService {
                                 .b_contents( entityOptional.get().getB_contents())
                                         .b_write( entityOptional.get().getB_write())
                                                 .b_view( entityOptional.get().getB_view())
+                                                    .b_img( entityOptional.get().getB_img())
                                                         .b_createdDate( date  )
                 .build();
 
@@ -101,7 +103,7 @@ public class BoardService {
         try {
             // 1. 수정할 엔티티 찾는다
             Optional<BoardEntity> entityOptional = boardRepository.findById(boardDto.getB_num());
-            // 2. 엔티티를 수정한다
+            // 2. 엔티티를 수정한다 [ 엔티티 변화 -> DB 변경처리 ]
             entityOptional.get().setB_title( boardDto.getB_title());
             entityOptional.get().setB_contents( boardDto.getB_contents());
 

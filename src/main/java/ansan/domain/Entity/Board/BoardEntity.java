@@ -29,5 +29,7 @@ public class BoardEntity extends BaseTimeEntity {
     @Column(name = "b_view")
     private int b_view;
 
+    @Column(name = "b_img" )
+    private String b_img;
 
 }

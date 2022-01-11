@@ -17,11 +17,14 @@
         <div th:text="${boardDto.b_write}"></div>
         <div th:text="${boardDto.b_view}"></div>
         <div th:text="${boardDto.b_createdDate}"></div>
+        <!-- <img src="<%=boardDto.b_img%> ">-->
+        <img th:src="@{ '/upload/' + ${boardDto.b_img } }">
+
     </div>
     <!-- jsp :  <button onclick="bdelete( <%=boardDto.b_num %> "> 삭제 </button> -->
     <!-- th : <button th:onclick="bdelete( [[${boardDto.b_num}]] )"> 삭제 </button> -->
 
-        <button th:if="${ session.logindto !=null }  and ${session.logindto.m_id == boardDto.b_write  }" th:onclick="bdelete( [[${boardDto.b_num}]] )"> 삭제 </button>
+        <button th:if="${ session.logindto} !=null }  and ${session.logindto.m_id == boardDto.b_write  }" th:onclick="bdelete( [[${boardDto.b_num}]] )"> 삭제 </button>
         <!-- jsp :
                 if( logindto !=null && logindto.m_id.equals( boardDto.b_write )   ){  }
         -->

@@ -14,5 +14,4 @@ function bdelete( b_num ){
         }
     });
 
-
 }
