@@ -2,6 +2,7 @@ package ansan.service;
 
 
 import ansan.domain.Dto.BoardDto;
+import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Board.BoardEntity;
 import ansan.domain.Entity.Board.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service    // 필수!!!!!!!
 public class BoardService {
@@ -60,7 +62,27 @@ public class BoardService {
             boardDtos.add( boardDto ); //  리스트에 저장
         }
         return boardDtos;
-    };
+    }
+
+    // 게시물 view 출력
+    public BoardDto getboard( int b_num ){
+
+        // findById( "pk값") : 해당 pk의 엔티티를 호출 => entityOptional.get()
+        Optional<BoardEntity> entityOptional = boardRepository.findById(b_num);
+
+        String date = entityOptional.get().getCreatedDate().format( DateTimeFormatter.ofPattern("yy-MM-dd") );
+
+        return BoardDto.builder()
+                .b_num( entityOptional.get().getB_num())
+                        .b_title( entityOptional.get().getB_title())
+                                .b_contetns( entityOptional.get().getB_contetns())
+                                        .b_write( entityOptional.get().getB_write())
+                                                .b_view( entityOptional.get().getB_view())
+                                                        .b_createdDate( date  )
+                .build();
+
+    }
+
 
 }
 

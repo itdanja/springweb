@@ -11,16 +11,22 @@ import javax.persistence.*;
 @Getter@Setter @ToString
 @AllArgsConstructor @NoArgsConstructor @Builder
 public class BoardEntity extends BaseTimeEntity {
+
     @Id // pk
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO KEY
+    @Column(name = "b_num")
     private int b_num;
-    @Column
+
+    @Column(name = "b_title")
     private String b_title;
-    @Column
+
+    @Column(name = "b_contetns")
     private String b_contetns;
-    @Column
+
+    @Column(name = "b_write")
     private String b_write;
-    @Column
+
+    @Column(name = "b_view")
     private int b_view;
 
 }
