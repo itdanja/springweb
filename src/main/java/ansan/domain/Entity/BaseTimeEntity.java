@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
 @EntityListeners( AuditingEntityListener.class)
 @MappedSuperclass
 public class BaseTimeEntity { // 엔티티 생성날짜/수정날짜 자동주입
+
     @CreatedDate    // 스프링에서 지원하는 현재 날짜.시간 주입
     private LocalDateTime createdDate;
     @LastModifiedDate // 수정 날짜.시간 주입
     private  LocalDateTime modifiedDate;
+
 }

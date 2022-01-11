@@ -89,8 +89,8 @@ public class MemberService {
                     // SMTP : 전자우편 전송 프로토콜 [ 통신 규약 ]
                     MimeMessage message = javaMailSender.createMimeMessage();
                     MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "utf-8");
-                    mimeMessageHelper.setFrom("kgs2072@naver.com", "Ansan");      // 보내는사람  //  이름
-                    mimeMessageHelper.setTo("kgs2072@naver.com");                                                 //  받는사람
+                    mimeMessageHelper.setFrom("본인아이디", "Ansan");      // 보내는사람  //  이름
+                    mimeMessageHelper.setTo( memberEntity.getM_email() );                                                 //  받는사람
                     mimeMessageHelper.setSubject("Ansan 계정 임시 비밀번호 발송 ");                      // 메일 제목
                     mimeMessageHelper.setText(body.toString(), true);                                    // 메일 내용    // html 형식유무
                     javaMailSender.send(message);     // 메일 전송

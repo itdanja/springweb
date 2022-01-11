@@ -13,7 +13,7 @@ public class BoardDto {
     private String b_title;
     private String b_contetns;
     private String b_write;
-    private LocalDateTime b_createdDate;
+    private String b_createdDate;
     private int b_view;
 
     // dto -> entity 메소드
@@ -24,4 +24,5 @@ public class BoardDto {
                 .b_write( this.b_write).
                 build();
     }
+
 }
