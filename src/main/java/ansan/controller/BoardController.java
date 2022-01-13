@@ -41,14 +41,16 @@ public class BoardController {
     @GetMapping("/board/boardlist")
     public String boardlist(Model model , @PageableDefault Pageable pageable){
 
-       /* ArrayList<BoardDto> boardDtos = boardService.boardlist(  );*/
-        Page<BoardEntity> boardDtos = boardService.boardlist( pageable );
+        /* 검색 서비스 */
+        String keyword=request.getParameter("keyword");
+        String search =request.getParameter("search");
+
+        Page<BoardEntity> boardDtos = boardService.boardlist( pageable , keyword , search );
 
         model.addAttribute( "BoardDtos" , boardDtos  );
 
         System.out.println( "페이지넘버 : " + boardDtos.getNumber() );
         return "board/boardlist" ;  // 타임리프 를 통한 html 반환
-
 
     }
     // 게시물 쓰기 페이지 이동
