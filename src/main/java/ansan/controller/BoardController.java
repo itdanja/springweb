@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Controller
 public class BoardController {
@@ -22,7 +27,10 @@ public class BoardController {
     BoardService boardService;  // boardService 메소드 호출용 객체
 
     @Autowired  // 빈 생성
-    HttpServletRequest request;
+    HttpServletRequest request;     // 요청 객체
+
+    @Autowired
+    HttpServletResponse response; // 응답 객체
 
 
     // 게시물 전체 목록 페이지 이동
@@ -31,7 +39,6 @@ public class BoardController {
         ArrayList<BoardDto> boardDtos = boardService.boardlist();
         model.addAttribute( "BoardDtos" , boardDtos  );
         return "board/boardlist" ;  // 타임리프 를 통한 html 반환
-
     }
     // 게시물 쓰기 페이지 이동
     @GetMapping("/board/boardwrite")
@@ -42,11 +49,17 @@ public class BoardController {
 
     // 게시물 쓰기 처리
     @PostMapping("/board/boardwritecontroller")
-    public String boardwritecontroller( @RequestParam("b_img") MultipartFile file ) throws IOException {
+    public String boardwritecontroller( @RequestParam("b_img") MultipartFile file  ) throws IOException {
 
-        // 파일업로드 [  JSP ( COS 라이브러리 ) -> SPRING (MultipartFile 인터페이스 ) ]
+        // 파일이름 중복배제 [ UUID : 고유 식별자 ]
+        UUID uuid = UUID.randomUUID(); // 고유 식별자 객체 난수생성 메소드 호출
+
+        String uuidfile = uuid.toString()+"_"+file.getOriginalFilename();
+                                // 고유 식별자 _ 파일명
+
+       // 파일업로드 [  JSP ( COS 라이브러리 ) -> SPRING (MultipartFile 인터페이스 ) ]
         String dir = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload";
-        String filepath = dir + "\\" + file.getOriginalFilename();  // 저장 경로 +  form에서 첨부한 파일이름 호출
+        String filepath = dir + "\\" +uuidfile;  // 저장 경로 +  form에서 첨부한 파일이름 호출
         // file.getOriginalFilename(); : form 첨부파일 호출
         file.transferTo( new File(filepath) ); // transferTo : 파일 저장 [ 예외 처리 ]
 
@@ -59,10 +72,35 @@ public class BoardController {
                 b_title(  request.getParameter("b_title") )
                         .b_contents( request.getParameter("b_contents") )
                                 .b_write( memberDto.getM_id() )
-                                        .b_img( file.getOriginalFilename() ).build();
+                                        .b_img( uuidfile ).build();
 
         boardService.boardwrite( boardDto );
         return "redirect:/board/boardlist"; // 글쓰기 성공시 게시판 목록이동
+
+    }
+
+    // 첨부파일 다운로드 처리
+    @GetMapping("/board/filedownload")
+    public void filedownload( @RequestParam("b_img") String b_img , HttpServletResponse response ){
+
+        // 첨부파일 경로 + 파일이름
+        String path = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload\\"+b_img;
+        // 객체화
+    try{
+            response.setHeader("Content-Disposition", "attachment;filename=" + b_img.split("_")[1]  ); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+
+            FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기
+            OutputStream out = response.getOutputStream(); // 출력 스트림
+
+            int read = 0;
+            byte[] buffer = new byte[1024];
+            while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
+                out.write(buffer, 0, read);
+            }
+        }
+        catch ( Exception e ) {
+
+        }
 
     }
 
@@ -71,6 +109,8 @@ public class BoardController {
     public String boardview( @PathVariable("b_num") int b_num , Model model  ){
 
         BoardDto boardDto =  boardService.getboard( b_num );
+
+        boardDto.setB_realimg( boardDto.getB_img().split("_")[1] );
 
         model.addAttribute( "boardDto" , boardDto  );
 

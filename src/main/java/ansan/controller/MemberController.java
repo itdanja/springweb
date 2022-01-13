@@ -42,7 +42,6 @@ public class MemberController {
 
         memberDto.setM_address( address1+"/"+address2+"/"+address3+"/"+address4 );
 
-        System.out.println( memberDto);
         // 자동주입 : form 입력한 name 과 dto의 필드명 동일하면 자동주입 // 입력이 없는 필드는 초기값[ 문자=null , 숫자 = 0 ]
         memberService.membersignup(memberDto);
         return "redirect:/";  // 회원가입 성공시 메인페이지 연결

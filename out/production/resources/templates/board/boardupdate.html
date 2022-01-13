@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:replace="header.html :: header" ></div>
+
+    <form method="post" action="/board/boardcontroller">
+        <!--<input type="text" value="<%=boardDto.b_num%>">  -->
+        <input type="hidden" th:value="${boardDto.b_num}" name="b_num">
+        <input type="text" th:value="${boardDto.b_title}" name="b_title">
+        <input type="text" th:value="${boardDto.b_contents}" name="b_contents">
+        <input type="submit" value="수정" >
+    </form>
+
+</body>
+</html>

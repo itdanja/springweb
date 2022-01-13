@@ -31,5 +31,4 @@ public class MemberEntity extends BaseTimeEntity {
     private int m_point; // 회원포인트
     @Column
     private String m_grade; // 회원등급
-
 }

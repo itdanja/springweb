@@ -60,7 +60,7 @@ public class BoardService {
                     boardEntity.getB_write() ,
                     date ,
                     boardEntity.getB_view() ,
-                    boardEntity.getB_img() );
+                    boardEntity.getB_img() , null  );
             boardDtos.add( boardDto ); //  리스트에 저장
         }
         return boardDtos;

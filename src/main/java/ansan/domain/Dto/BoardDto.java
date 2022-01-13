@@ -16,7 +16,7 @@ public class BoardDto {
     private String b_createdDate;
     private int b_view;
     private String b_img;
-
+    private String b_realimg;
 
     // dto -> entity 메소드
     public BoardEntity toentity(){
@@ -27,5 +27,4 @@ public class BoardDto {
                 .b_img( this.b_img ).
                 build();
     }
-
 }
