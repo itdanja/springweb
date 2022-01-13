@@ -6,6 +6,9 @@ import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Board.BoardEntity;
 import ansan.domain.Entity.Board.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +31,22 @@ public class BoardService {
         boardRepository.save( boardDto.toentity() );
     }
 
-    // 모든 글출력 메소드
-    public ArrayList<BoardDto> boardlist(){
+
+    // 모든 글출력 메소드 [ 페이징처리 ]
+    public Page<BoardEntity> boardlist( Pageable pageable ){
+
+        // 현재 페이지
+        int page = (pageable.getPageNumber() == 0 ) ? 0 : (pageable.getPageNumber()-1);
+
+        //pageable = PageRequest.of(  0 , 10 );   // 첫번째 페이지 1~10 까지 출력
+        //pageable = PageRequest.of(  1 , 10 );   // 두번째 페이지 11~20 까지 출력
+        // pageable = PageRequest.of(  2 , 10 );   // 세번째 페이지 21~30 까지 출력
+        pageable = PageRequest.of(  page , 5 );   //  해당 변수 페이지 에 10 개 출력
+        return boardRepository.findAll( pageable );
+    }
+
+    // 모든 글출력 메소드[ 페이징처리 x ]
+/*    public ArrayList<BoardDto> boardlist(){
 
         // 게시물 번호를 정렬해서 엔티티 호출하기
         // SQL : Select * from board order by 필드명 DESC
@@ -64,7 +81,7 @@ public class BoardService {
             boardDtos.add( boardDto ); //  리스트에 저장
         }
         return boardDtos;
-    }
+    }*/
 
     // 게시물 view 출력
     public BoardDto getboard( int b_num ){

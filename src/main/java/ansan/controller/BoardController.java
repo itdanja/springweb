@@ -2,8 +2,12 @@ package ansan.controller;
 
 import ansan.domain.Dto.BoardDto;
 import ansan.domain.Dto.MemberDto;
+import ansan.domain.Entity.Board.BoardEntity;
 import ansan.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +39,17 @@ public class BoardController {
 
     // 게시물 전체 목록 페이지 이동
     @GetMapping("/board/boardlist")
-    public String boardlist( Model model ){
-        ArrayList<BoardDto> boardDtos = boardService.boardlist();
+    public String boardlist(Model model , @PageableDefault Pageable pageable){
+
+       /* ArrayList<BoardDto> boardDtos = boardService.boardlist(  );*/
+        Page<BoardEntity> boardDtos = boardService.boardlist( pageable );
+
         model.addAttribute( "BoardDtos" , boardDtos  );
+
+        System.out.println( "페이지넘버 : " + boardDtos.getNumber() );
         return "board/boardlist" ;  // 타임리프 를 통한 html 반환
+
+
     }
     // 게시물 쓰기 페이지 이동
     @GetMapping("/board/boardwrite")

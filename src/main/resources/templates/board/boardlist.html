@@ -31,11 +31,52 @@
                         </td>
 
                         <td th:text="${boardDto.b_write}">  </td>
-                        <td th:text="${boardDto.b_createdDate}">  </td>
+                        <td th:text="${boardDto.createdDate}">  </td>
                         <td th:text="${boardDto.b_view}">  </td>
                     </tr>
             </table>
     </div>
+
+    <!-- 타임리프 변수 정의
+            th:with = 변수명 = 값
+            시작페이지번호 = 모델명.number / 10  *10  +1
+            끝페이지번호 =  시작페이지번호 + 9 < 모델명.전체페이지수 ? 시작페이지번호+9 : 모델명.전체페이지수
+                                        //   조건 ? 참 : 거짓        // if(조건) 참 else 거짓
+
+                                        number = 1 일때       23 / 10 ->  3
+                                            start = 1
+                                            last = 1+9 < 3 :        ->    3
+    -->
+    <ul class="pagination justify-content-center"
+                th:with="start=${ T(Math).floor( BoardDtos.number/10 ) *10 +1  }   ,
+                last = start + 9 < BoardDtos.totalPages ?  start+9 : BoardDtos.totalPages ">
+
+        <li class="page-item">    <!-- 첫 페이지 -->
+            <a class="page-link" th:href="@{/board/boardlist(page=1)} " th:text="${page}"> <<  </a>
+        </li>
+
+        <li class="page-item">    <!-- 이전 페이지 -->
+            <a class="page-link" th:href="@{/board/boardlist(page=${BoardDtos.number})} " th:text="${page}"> <  </a>
+        </li>
+
+        <!-- 페이지 번호 목록  -->
+        <li  class="page-item" th:each="page : ${#numbers.sequence( start , last ) }">
+                        <!-- th:each = " 변수명 : ${ #numbers.sequence( 시작번호 , 마지막번호 )  } -->
+                        <!-- for( int page = start ;  page <=last ; page++ )  -->
+            <a class="page-link"  th:href="@{/board/boardlist(page=${page})}" th:text="${page}"></a>
+        </li>
+
+        <li class="page-item">    <!-- 다음 페이지 -->
+            <a class="page-link"  th:href="@{/board/boardlist(page=1)} " th:text="${BoardDtos.number+2}"> >  </a>
+        </li>
+
+        <li class="page-item" >    <!-- 마지막 페이지 -->
+            <a class="page-link" th:href="@{/board/boardlist(page=${BoardDtos.totalPages})}" th:text="${page}"> >> </a>
+        </li>
+
+    </ul>
+
+
 
 
 </body>
