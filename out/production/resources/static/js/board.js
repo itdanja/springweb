@@ -17,7 +17,21 @@ function bdelete( b_num ){
 
 function boardwrite( ){
 
-    alert("하하하하하");
+    // 1. 폼 태그 가져오기 [ 폼 안에 있는 input 사용 가능 ]
+    var formData = new FormData(form);
 
+    // 폼을 컨트롤러에게 비동기 전송
+    $.ajax({
+        type : "POST" ,
+        url : "/board/boardwritecontroller" ,
+        data : formData ,
+        processData : false ,
+        contentType : false ,   // 첨부파일 보낼때 .
+        success : function( data ) {
+           if( data == 1 ){
+                location.href="/board/boardlist";
+           }
+        }
+    });
 }
 

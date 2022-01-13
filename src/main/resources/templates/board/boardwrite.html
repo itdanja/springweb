@@ -10,11 +10,11 @@
 
     <div class="container">
 
-        <form action="/board/boardwritecontroller" method="post" enctype="multipart/form-data">
+        <form id="form">
             제목 : <input type="text" name="b_title"> <br>
             내용 :  <input type="text" name="b_contents"> <br>
             첨부파일 : <input type="file" name="b_img"> <br>
-            <button onclick="boardwrite()"> 등록 </button>
+            <input type="button" onclick="boardwrite();" value="등록">
 
         </form>
 

@@ -49,33 +49,39 @@ public class BoardController {
 
     // 게시물 쓰기 처리
     @PostMapping("/board/boardwritecontroller")
-    public String boardwritecontroller( @RequestParam("b_img") MultipartFile file  ) throws IOException {
+    @ResponseBody
+    public int boardwritecontroller( @RequestParam("b_img") MultipartFile file  )  {
+        try {
+            // 파일이름 중복배제 [ UUID : 고유 식별자 ]
+            UUID uuid = UUID.randomUUID(); // 고유 식별자 객체 난수생성 메소드 호출
 
-        // 파일이름 중복배제 [ UUID : 고유 식별자 ]
-        UUID uuid = UUID.randomUUID(); // 고유 식별자 객체 난수생성 메소드 호출
+            String uuidfile = uuid.toString() + "_" + file.getOriginalFilename();
+            // 고유 식별자 _ 파일명
 
-        String uuidfile = uuid.toString()+"_"+file.getOriginalFilename();
-                                // 고유 식별자 _ 파일명
+            // 파일업로드 [  JSP ( COS 라이브러리 ) -> SPRING (MultipartFile 인터페이스 ) ]
+            String dir = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload";
+            String filepath = dir + "\\" + uuidfile;  // 저장 경로 +  form에서 첨부한 파일이름 호출
+            // file.getOriginalFilename(); : form 첨부파일 호출
+            file.transferTo(new File(filepath)); // transferTo : 파일 저장 [ 예외 처리 ]
 
-       // 파일업로드 [  JSP ( COS 라이브러리 ) -> SPRING (MultipartFile 인터페이스 ) ]
-        String dir = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload";
-        String filepath = dir + "\\" +uuidfile;  // 저장 경로 +  form에서 첨부한 파일이름 호출
-        // file.getOriginalFilename(); : form 첨부파일 호출
-        file.transferTo( new File(filepath) ); // transferTo : 파일 저장 [ 예외 처리 ]
+            // 세션 선언
+            HttpSession session = request.getSession();
+            // 세션 호출
+            MemberDto memberDto = (MemberDto) session.getAttribute("logindto");
 
-        // 세션 선언
-        HttpSession session = request.getSession();
-        // 세션 호출
-        MemberDto memberDto =  (MemberDto) session.getAttribute( "logindto");
+            BoardDto boardDto = BoardDto.builder().
+                    b_title(request.getParameter("b_title"))
+                    .b_contents(request.getParameter("b_contents"))
+                    .b_write(memberDto.getM_id())
+                    .b_img(uuidfile).build();
 
-        BoardDto boardDto = BoardDto.builder().
-                b_title(  request.getParameter("b_title") )
-                        .b_contents( request.getParameter("b_contents") )
-                                .b_write( memberDto.getM_id() )
-                                        .b_img( uuidfile ).build();
-
-        boardService.boardwrite( boardDto );
-        return "redirect:/board/boardlist"; // 글쓰기 성공시 게시판 목록이동
+            boardService.boardwrite(boardDto);
+            /*return "redirect:/board/boardlist"; // 글쓰기 성공시 게시판 목록이동*/
+            return 1;
+        }
+        catch ( Exception e ) {
+            return 2;
+        }
 
     }
 
