@@ -35,13 +35,10 @@ public class BoardService {
     // 모든 글출력 메소드 [ 페이징처리 ]
     public Page<BoardEntity> boardlist( Pageable pageable ){
 
-        // 현재 페이지
-        int page = (pageable.getPageNumber() == 0 ) ? 0 : (pageable.getPageNumber()-1);
-
         //pageable = PageRequest.of(  0 , 10 );   // 첫번째 페이지 1~10 까지 출력
         //pageable = PageRequest.of(  1 , 10 );   // 두번째 페이지 11~20 까지 출력
         // pageable = PageRequest.of(  2 , 10 );   // 세번째 페이지 21~30 까지 출력
-        pageable = PageRequest.of(  page , 5 );   //  해당 변수 페이지 에 10 개 출력
+        pageable = PageRequest.of(  pageable.getPageNumber() , 5 );   //  해당 변수 페이지 에 10 개 출력
         return boardRepository.findAll( pageable );
     }
 
