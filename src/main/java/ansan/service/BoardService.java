@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -86,14 +88,29 @@ public class BoardService {
         }
         return boardDtos;
     }*/
+    @Autowired
+    HttpServletRequest request;
 
     // 게시물 view 출력
+    @Transactional
     public BoardDto getboard( int b_num ){
 
         // findById( "pk값") : 해당 pk의 엔티티를 호출 => entityOptional.get()
         Optional<BoardEntity> entityOptional = boardRepository.findById(b_num);
 
         String date = entityOptional.get().getCreatedDate().format( DateTimeFormatter.ofPattern("yy-MM-dd") );
+
+        // [ 세션 이용한 ] 조회수 중복 방지
+        HttpSession session = request.getSession();
+        if( session.getAttribute(b_num+"") == null ) { // 만약에 기존에 조회수 증가을 안했으면
+            // 조회수 변경
+            entityOptional.get().setB_view(entityOptional.get().getB_view() + 1);
+            // 세션 부여
+            session.setAttribute(b_num + "", 1);
+            // 해당 세션 시간  [ 1초 = 60*60*24 = 24시간 ]
+            session.setMaxInactiveInterval( 60*60*24 );
+        }
+
 
         return BoardDto.builder()
                 .b_num( entityOptional.get().getBnum())

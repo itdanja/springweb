@@ -18,20 +18,21 @@
                         <th> 작성일 </th><th> 조회수 </th>
                     </tr>
                     <tr th:each="boardDto : ${BoardDtos}">
-                        <td th:text="${boardDto.b_num}">  </td>
 
-                        <td >
+                        <td th:text="${boardDto.bnum}"> </td>
+                        <td>
                                 <!--  JSP : <a href="boardview.jsp?b_num=boardDto.b_num ">
                                        th :  <a th:href="@{ '기존경로[url] / ' + 변수 } ">
                                 -->
-                                <a th:href="@{ '/board/boardview/' + ${boardDto.b_num} } ">
+                                <a th:href="@{ '/board/boardview/' + ${boardDto.bnum} } ">
                                     <span th:text="${boardDto.b_title}" onclick="ajax" ></span>
                                 </a>
-
                         </td>
 
                         <td th:text="${boardDto.b_write}">  </td>
-                        <td th:text="${boardDto.createdDate}">  </td>
+                        <td th:text="${ #temporals.format( boardDto.createdDate , 'MM-dd hh:mm') }">  </td>
+                                            <!-- #temporals.format( 값 , 형식 )  -->
+
                         <td th:text="${boardDto.b_view}">  </td>
                     </tr>
             </table>
@@ -54,17 +55,17 @@
         <li class="page-item">
             <a class="page-link" th:href="@{/board/boardlist(page=1)}"> << </a>
         </li>
-        <!-- 이전페이지이동 -->
-        <li class="page-item" >
-            <a class="page-link" th:href="@{/board/boardlist(page=${ BoardDtos.number })}"> < </a>
+        <!-- 이전페이지이동  [ 만약에 현페이지가 첫페이지이면 이전페이지 표시 X -->
+        <li class="page-item "th:class="${BoardDtos.first} ? 'disabled' ">
+            <a class="page-link" th:href="${BoardDtos.first} ? '#' : @{/board/boardlist(page=${ BoardDtos.number })}"> < </a>
         </li>
         <!-- 페이지번호 -->
         <li class="page-item" th:each="page : ${#numbers.sequence( start , last ) }">
             <a class="page-link" th:href="@{/board/boardlist(page=${page})}" th:text="${page}"> </a>
         </li>
-        <!-- 다음페이지이동 -->
-        <li class="page-item">
-            <a class="page-link" th:href=" @{/board/boardlist(page=${BoardDtos.number+2})}"> > </a>
+        <!-- 다음페이지이동 [ 만약에 현페이지가 마지막페이지 이면 다음페이지 표시X -->
+        <li class="page-item" th:class="${BoardDtos.last} ? 'disabled'">
+            <a class="page-link" th:href="${BoardDtos.last} ? '#' : @{/board/boardlist(page=${BoardDtos.number+2})}"> > </a>
         </li>
         <!-- 마지막페이지 이동 -->
         <li class="page-item">
@@ -73,18 +74,23 @@
     </ul>
 
     <!-- 검색창 -->
-    <div >
         <form action="/board/boardlist" method="get" >
-            <select name="keyword">
-                <option value="b_title"> 제목 </option>
-                <option value="b_contents"> 내용 </option>
-                <option value="b_writer"> 작성자 </option>
-            </select>
-            <input type="type" name="search">
-            <input type="submit" value="검색" class="btn btn-info">
+            <div class="row no-gutters">
+                <div class="col-md-2">
+                    <select name="keyword" class="form-control">
+                        <option value="b_title"> 제목 </option>
+                        <option value="b_contents"> 내용 </option>
+                        <option value="b_writer"> 작성자 </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="type" name="search" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="검색" class="form-control">
+                </div>
+            </div>
         </form>
-    </div>
-
 
 </body>
 </html>

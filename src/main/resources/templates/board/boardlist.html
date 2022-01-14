@@ -18,8 +18,8 @@
                         <th> 작성일 </th><th> 조회수 </th>
                     </tr>
                     <tr th:each="boardDto : ${BoardDtos}">
-                        <td th:text="${boardDto.bnum}">  </td>
 
+                        <td th:text="${boardDto.bnum}"> </td>
                         <td>
                                 <!--  JSP : <a href="boardview.jsp?b_num=boardDto.b_num ">
                                        th :  <a th:href="@{ '기존경로[url] / ' + 변수 } ">
@@ -27,11 +27,12 @@
                                 <a th:href="@{ '/board/boardview/' + ${boardDto.bnum} } ">
                                     <span th:text="${boardDto.b_title}" onclick="ajax" ></span>
                                 </a>
-
                         </td>
 
                         <td th:text="${boardDto.b_write}">  </td>
-                        <td th:text="${boardDto.createdDate}">  </td>
+                        <td th:text="${ #temporals.format( boardDto.createdDate , 'MM-dd hh:mm') }">  </td>
+                                            <!-- #temporals.format( 값 , 형식 )  -->
+
                         <td th:text="${boardDto.b_view}">  </td>
                     </tr>
             </table>

@@ -55,7 +55,6 @@ public class BoardController {
             search =   (String)  session.getAttribute("search");
         }
 
-
         Page<BoardEntity> boardDtos = boardService.boardlist( pageable , keyword , search );
 
         model.addAttribute( "BoardDtos" , boardDtos  );
