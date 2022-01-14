@@ -36,7 +36,7 @@
                         <td th:text="${boardDto.b_view}">  </td>
                     </tr>
             </table>
-    </div>
+
 
     <!-- 타임리프 변수 정의
             th:with = 변수명 = 값
@@ -74,23 +74,22 @@
     </ul>
 
     <!-- 검색창 -->
-        <form action="/board/boardlist" method="get" >
-            <div class="row no-gutters">
-                <div class="col-md-2">
-                    <select name="keyword" class="form-control">
+        <form action="/board/boardlist" method="get"  class="col-md-5 offset-4 input-group my-3 g-0" >
+                <div class="col-md-1">
+                    <select name="keyword" class="form-select " >
                         <option value="b_title"> 제목 </option>
                         <option value="b_contents"> 내용 </option>
-                        <option value="b_writer"> 작성자 </option>
+                        <option value="b_write"> 작성자 </option>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <input type="type" name="search" class="form-control">
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" value="검색" class="form-control">
-                </div>
+            <div class="col-md-2">
+                <input type="type" name="search" class="form-control">
+            </div>
+            <div class="col-md-1">
+                <input type="submit" value="검색" class="form-control">
             </div>
         </form>
+    </div>
 
 </body>
 </html>

@@ -22,11 +22,9 @@
     <!-- jsp :  <button onclick="bdelete( <%=boardDto.b_num %> "> 삭제 </button> -->
     <!-- th : <button th:onclick="bdelete( [[${boardDto.b_num}]] )"> 삭제 </button> -->
 
-      <!--  <button th:if="${ session.logindto} !=null }  and ${session.logindto.m_id == boardDto.b_write  }" th:onclick="bdelete( [[${boardDto.b_num}]] )"> 삭제 </button>
-        &lt;!&ndash; jsp :
-                if( logindto !=null && logindto.m_id.equals( boardDto.b_write )   ){  }
-        &ndash;&gt;
--->
+ <button th:if="${ session.logindto !=null }  and ${session.logindto.m_id == boardDto.b_write  }" th:onclick="bdelete( [[${boardDto.b_num}]] )"> 삭제 </button>
+
+
     <button th:if="${ session.logindto !=null }  and ${session.logindto.m_id == boardDto.b_write  }">
         <a th:href="@{ '/board/boardupdate/' + ${boardDto.b_num} }"> 수정 </a>
     </button>

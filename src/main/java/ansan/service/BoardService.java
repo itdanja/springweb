@@ -47,6 +47,8 @@ public class BoardService {
 
         // 만약에 검색이 있을경우
         if (  keyword !=null && keyword.equals("b_title") ) return boardRepository.findAlltitle( search , pageable );
+        if (  keyword !=null && keyword.equals("b_contents") ) return boardRepository.findAllcontents( search , pageable );
+        if (  keyword !=null && keyword.equals("b_write") ) return boardRepository.findAllwrite( search , pageable );
 
         return boardRepository.findAll( pageable );
     }

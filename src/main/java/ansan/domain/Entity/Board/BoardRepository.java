@@ -13,4 +13,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity , Integer> {
     @Query( nativeQuery = true , value = "select * from board where b_title like %:search%" )
     Page<BoardEntity> findAlltitle( @Param("search") String search, Pageable pageable);
 
+    @Query( nativeQuery = true , value = "select * from board where b_contents like %:search%" )
+    Page<BoardEntity> findAllcontents( @Param("search") String search, Pageable pageable);
+
+    @Query( nativeQuery = true , value = "select * from board where b_write like %:search%" )
+    Page<BoardEntity> findAllwrite( @Param("search") String search, Pageable pageable);
+
 }

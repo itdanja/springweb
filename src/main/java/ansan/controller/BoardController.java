@@ -17,8 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 @Controller
@@ -56,7 +55,6 @@ public class BoardController {
 
         model.addAttribute( "BoardDtos" , boardDtos  );
 
-        System.out.println( "페이지넘버 : " + boardDtos.getNumber() );
         return "board/boardlist" ;  // 타임리프 를 통한 html 반환
 
     }
@@ -118,27 +116,19 @@ public class BoardController {
 
         // 첨부파일 경로 + 파일이름
         String path = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload\\"+b_img;
-        // 객체화
-        File file = new File( path );
-    try{
-            response.setHeader("Content-Disposition", "attachment;filename=" + b_img.split("_")[1]  ); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
 
-            if( file.isFile() ){	//file.isFile() : 파일이 있는지 없는지 유무 확인
+        try{
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(  b_img.split("_")[1]  , "UTF-8") ); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+                                                                                                                                        // 영문X 한글[ URLEncoder.encode( 파일명 , "UTF-8")
+            FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기
+            OutputStream out = response.getOutputStream(); // 출력 스트림
 
-                // 3.입력스트림 [ 파일을 바이트형으로 읽어오기 ]
-                BufferedInputStream inputStream = new BufferedInputStream( new FileInputStream(file));
-                byte[] bytes = new byte[ (int)file.length() ];	// file.legnth : 파일 바이트 길이 호출 메소드
-                inputStream.read( bytes );
-
-                // 3.출력스트림 [ 읽어온 바이트형 파일을 내보내기 ] // response.getOutputStream() : 클라이언트에게 바이트 전송
-                BufferedOutputStream outputStream = new BufferedOutputStream( response.getOutputStream() );
-                outputStream.write( bytes );
-
-                inputStream.close();	// 입력 스트림 닫기
-                outputStream.close();	// 출력 스트림 닫기
+            int read = 0;
+            byte[] buffer = new byte[1024];
+            while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
+                out.write(buffer, 0, read);
+            }
         }
-
-    }
         catch ( Exception e ) {
 
         }
