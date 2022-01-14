@@ -16,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -122,18 +119,26 @@ public class BoardController {
         // 첨부파일 경로 + 파일이름
         String path = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload\\"+b_img;
         // 객체화
+        File file = new File( path );
     try{
             response.setHeader("Content-Disposition", "attachment;filename=" + b_img.split("_")[1]  ); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
 
-            FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기
-            OutputStream out = response.getOutputStream(); // 출력 스트림
+            if( file.isFile() ){	//file.isFile() : 파일이 있는지 없는지 유무 확인
 
-            int read = 0;
-            byte[] buffer = new byte[1024];
-            while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
-                out.write(buffer, 0, read);
-            }
+                // 3.입력스트림 [ 파일을 바이트형으로 읽어오기 ]
+                BufferedInputStream inputStream = new BufferedInputStream( new FileInputStream(file));
+                byte[] bytes = new byte[ (int)file.length() ];	// file.legnth : 파일 바이트 길이 호출 메소드
+                inputStream.read( bytes );
+
+                // 3.출력스트림 [ 읽어온 바이트형 파일을 내보내기 ] // response.getOutputStream() : 클라이언트에게 바이트 전송
+                BufferedOutputStream outputStream = new BufferedOutputStream( response.getOutputStream() );
+                outputStream.write( bytes );
+
+                inputStream.close();	// 입력 스트림 닫기
+                outputStream.close();	// 출력 스트림 닫기
         }
+
+    }
         catch ( Exception e ) {
 
         }
@@ -145,7 +150,7 @@ public class BoardController {
     public String boardview( @PathVariable("b_num") int b_num , Model model  ){
 
         BoardDto boardDto =  boardService.getboard( b_num );
-        // 첨부파일 존재하면
+        // 첨부파일 존재하면 uuid가 제거된 파일명 변환해서 b_realimg 담기
         if( boardDto.getB_img() != null ) boardDto.setB_realimg( boardDto.getB_img().split("_")[1] );
 
         model.addAttribute( "boardDto" , boardDto  );
@@ -171,34 +176,42 @@ public class BoardController {
     public String boardupdate( @PathVariable("b_num") int b_num , Model model ){
 
         BoardDto boardDto = boardService.getboard( b_num );
+
+        // 첨부파일 존재하면 uuid가 제거된 파일명 변환해서 b_realimg 담기
+        if( boardDto.getB_img() != null ) boardDto.setB_realimg( boardDto.getB_img().split("_")[1] );
+
         model.addAttribute("boardDto" , boardDto );
 
         return "board/boardupdate"; // html 열기
     }
     // 수정 처리
     @PostMapping("/board/boardcontroller")
-    public String boardcontroller( BoardDto boardDto ){
-                                                    // 자동 주입 사용
+    public String boardcontroller( @RequestParam("b_newimg") MultipartFile file
+                                    , @RequestParam("b_num") int b_num
+                                    , @RequestParam("b_title") String b_title
+                                    , @RequestParam("b_contents") String b_contents
+                                    , @RequestParam("b_img") String b_img){
 
-        // 자동 주입 미사용
-/*        int b_num = Integer.parseInt( request.getParameter("b_num") );
-        String b_title = request.getParameter("b_title")  ;
-        String b_contents = request.getParameter("b_contents")  ;
-        BoardDto boardDto = new BoardDto();
-        boardDto.setB_num( b_num );
-        boardDto.setB_title( b_title );
-        boardDto.setB_contents( b_contents );
-        System.out.println( boardDto.toString() );*/
+        if( ! file.getOriginalFilename().equals("") ) { // 변경된 첨부파일 존재
+            try {
+                UUID uuid = UUID.randomUUID();
+                String uuidfile = uuid.toString() + "_" + file.getOriginalFilename().replaceAll("_", "-");
 
-        boolean result =  boardService.update( boardDto );
+                String dir = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload";
+                String filepath = dir + "\\" + uuidfile;  // 저장 경로 +  form에서 첨부한 파일이름 호출
+                file.transferTo(new File(filepath)); // transferTo : 파일 저장 [ 예외 처리 ]
+               boardService.update(
+                        BoardDto.builder().b_num(b_num).b_title(b_title).b_contents(b_contents).b_img( uuidfile ) .build()  );
+            }
+            catch ( Exception e ) {
+                System.out.println( e );
+            }
 
-       /* return "반환타입";       // 일반java :  반환타입이 반환
-        return "html파일명"; // 타임리프가 해당 html 반환
-        return "객체명"; // @ResponseBody 사용시 객체 반환
-        return "redirect : URL "; // 해당 URL 반환*/
-        return "redirect:/board/boardview/"+boardDto.getB_num();
-
+        }else{   // 변경된 첨부파일 없음 -> 기존파일 그대로 사용
+            boardService.update(
+                    BoardDto.builder().b_num(b_num).b_title(b_title).b_contents(b_contents).b_img( b_img ) .build()  );
+        }
+        return "redirect:/board/boardview/"+b_num;
     }
-
 
 }

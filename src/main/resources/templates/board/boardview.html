@@ -26,10 +26,10 @@
         &lt;!&ndash; jsp :
                 if( logindto !=null && logindto.m_id.equals( boardDto.b_write )   ){  }
         &ndash;&gt;
-
+-->
     <button th:if="${ session.logindto !=null }  and ${session.logindto.m_id == boardDto.b_write  }">
         <a th:href="@{ '/board/boardupdate/' + ${boardDto.b_num} }"> 수정 </a>
-    </button>-->
+    </button>
 
 </body>
 </html>

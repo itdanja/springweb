@@ -144,6 +144,7 @@ public class BoardService {
             // 2. 엔티티를 수정한다 [ 엔티티 변화 -> DB 변경처리 ]
             entityOptional.get().setB_title( boardDto.getB_title());
             entityOptional.get().setB_contents( boardDto.getB_contents());
+            entityOptional.get().setB_img( boardDto.getB_img());
 
             return true;
         }

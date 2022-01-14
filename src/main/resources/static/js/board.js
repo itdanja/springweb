@@ -26,7 +26,9 @@ function boardwrite( ){
         url : "/board/boardwritecontroller" ,
         data : formData ,
         processData : false ,
-        contentType : false ,   // 첨부파일 보낼때 .
+        contentType : false ,   // 첨부파일 보낼때 ..
+        cache: false ,
+        timeout: 600000 ,
         success : function( data ) {
            if( data == 1 ){
                 location.href="/board/boardlist";

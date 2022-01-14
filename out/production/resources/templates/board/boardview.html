@@ -17,9 +17,7 @@
         <div th:text="${boardDto.b_write}"></div>
         <div th:text="${boardDto.b_view}"></div>
         <div th:text="${boardDto.b_createdDate}"></div>
-        <!-- <img src="<%=boardDto.b_img%> ">-->
-        <img th:src="@{ '/upload/' + ${boardDto.b_img } }">
-            <a th:href="@{/board/filedownload(b_img=${boardDto.b_img} )}" th:text="${boardDto.b_realimg}"></a>
+        <a th:href="@{/board/filedownload(b_img=${boardDto.b_img} )}" th:text="${boardDto.b_realimg}"></a>
     </div>
     <!-- jsp :  <button onclick="bdelete( <%=boardDto.b_num %> "> 삭제 </button> -->
     <!-- th : <button th:onclick="bdelete( [[${boardDto.b_num}]] )"> 삭제 </button> -->
@@ -28,10 +26,10 @@
         &lt;!&ndash; jsp :
                 if( logindto !=null && logindto.m_id.equals( boardDto.b_write )   ){  }
         &ndash;&gt;
-
+-->
     <button th:if="${ session.logindto !=null }  and ${session.logindto.m_id == boardDto.b_write  }">
         <a th:href="@{ '/board/boardupdate/' + ${boardDto.b_num} }"> 수정 </a>
-    </button>-->
+    </button>
 
 </body>
 </html>
