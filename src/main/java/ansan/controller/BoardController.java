@@ -75,18 +75,25 @@ public class BoardController {
     @ResponseBody
     public int boardwritecontroller( @RequestParam("b_img") MultipartFile file  )  {
         try {
-            // 파일이름 중복배제 [ UUID : 고유 식별자 ]
-            UUID uuid = UUID.randomUUID(); // 고유 식별자 객체 난수생성 메소드 호출
+            String uuidfile = null;
+            if( !file.getOriginalFilename().equals("") ) { // 첨부파일이 있을때
 
-            String uuidfile = uuid.toString() + "_" + file.getOriginalFilename();
-            // 고유 식별자 _ 파일명
+                // 파일이름 중복배제 [ UUID : 고유 식별자 ]
+                UUID uuid = UUID.randomUUID(); // 고유 식별자 객체 난수생성 메소드 호출
+                // 사용자가 만약에 파일명에 _ 존재하면 - 변경
+                String OriginalFilename = file.getOriginalFilename();
+                uuidfile = uuid.toString() + "_" + OriginalFilename.replaceAll("_" , "-");
+                // 고유 식별자 _ 파일명
 
-            // 파일업로드 [  JSP ( COS 라이브러리 ) -> SPRING (MultipartFile 인터페이스 ) ]
-            String dir = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload";
-            String filepath = dir + "\\" + uuidfile;  // 저장 경로 +  form에서 첨부한 파일이름 호출
-            // file.getOriginalFilename(); : form 첨부파일 호출
-            file.transferTo(new File(filepath)); // transferTo : 파일 저장 [ 예외 처리 ]
+                // 파일업로드 [  JSP ( COS 라이브러리 ) -> SPRING (MultipartFile 인터페이스 ) ]
+                String dir = "D:\\web0928\\springweb\\src\\main\\resources\\static\\upload";
+                String filepath = dir + "\\" + uuidfile;  // 저장 경로 +  form에서 첨부한 파일이름 호출
+                // file.getOriginalFilename(); : form 첨부파일 호출
+                file.transferTo(new File(filepath)); // transferTo : 파일 저장 [ 예외 처리 ]
 
+            }else{ // 첨부파일 없을때
+                uuidfile = null;
+            }
             // 세션 선언
             HttpSession session = request.getSession();
             // 세션 호출
@@ -138,8 +145,8 @@ public class BoardController {
     public String boardview( @PathVariable("b_num") int b_num , Model model  ){
 
         BoardDto boardDto =  boardService.getboard( b_num );
-
-        boardDto.setB_realimg( boardDto.getB_img().split("_")[1] );
+        // 첨부파일 존재하면
+        if( boardDto.getB_img() != null ) boardDto.setB_realimg( boardDto.getB_img().split("_")[1] );
 
         model.addAttribute( "boardDto" , boardDto  );
 
