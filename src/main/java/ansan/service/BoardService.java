@@ -35,12 +35,17 @@ public class BoardService {
     // 모든 글출력 메소드 [ 페이징처리 ]
     public Page<BoardEntity> boardlist( Pageable pageable , String keyword , String search ){
 
+
+        // 페이지 번호
+        int page =  0;
+        if( pageable.getPageNumber() == 0) page = 0;        // 0이면 1 페이지
+        else page = pageable.getPageNumber()-1 ;                // 1이면-1   1 페이지 2이면-1   2페이지
+        // 페이지 속성 [ PageRequest.of( 페이지번호 , 페이당 게시물수 , 정렬기준 )
+        pageable = PageRequest.of(  page, 5 , Sort.by( Sort.Direction.DESC , "bnum") );   //  해당 변수 페이지 에 10 개 출력
+
         // 만약에 검색이 있을경우
         if (  keyword !=null && keyword.equals("b_title") ) return boardRepository.findAlltitle( search , pageable );
-        int page =  0;
-        if( pageable.getPageNumber() == 0) page = 0;
-        else page = pageable.getPageNumber()-1 ;
-        pageable = PageRequest.of(  page, 5 , Sort.by( Sort.Direction.DESC , "createdDate") );   //  해당 변수 페이지 에 10 개 출력
+
         return boardRepository.findAll( pageable );
     }
 
@@ -91,7 +96,7 @@ public class BoardService {
         String date = entityOptional.get().getCreatedDate().format( DateTimeFormatter.ofPattern("yy-MM-dd") );
 
         return BoardDto.builder()
-                .b_num( entityOptional.get().getB_num())
+                .b_num( entityOptional.get().getBnum())
                         .b_title( entityOptional.get().getB_title())
                                 .b_contents( entityOptional.get().getB_contents())
                                         .b_write( entityOptional.get().getB_write())

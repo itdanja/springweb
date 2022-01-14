@@ -45,6 +45,17 @@ public class BoardController {
         String keyword=request.getParameter("keyword");
         String search =request.getParameter("search");
 
+        HttpSession session = request.getSession();
+
+        if( keyword!=null || search!=null ){
+            session.setAttribute("keyword" , keyword);
+            session.setAttribute("search" , search);
+        }else{
+            keyword =  (String) session.getAttribute("keyword");
+            search =   (String)  session.getAttribute("search");
+        }
+
+
         Page<BoardEntity> boardDtos = boardService.boardlist( pageable , keyword , search );
 
         model.addAttribute( "BoardDtos" , boardDtos  );
