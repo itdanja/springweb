@@ -20,7 +20,7 @@ public class BoardEntity extends BaseTimeEntity {
     @Column(name = "b_title")
     private String b_title;
 
-    @Column(name = "b_contents")
+    @Column(name = "b_contents" , columnDefinition = "LONGTEXT") // 썸머노트 내용에 사진이 들어갈경우에 바이트 커야함
     private String b_contents;
 
     @Column(name = "b_write")

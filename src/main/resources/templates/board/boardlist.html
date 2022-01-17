@@ -7,24 +7,29 @@
 <body>
 
     <div th:replace="header.html :: header" ></div>
-    <div class="container">
-
-        <div th:if="${session.logindto == null }" > * 로그인시 글쓰기 가능합니다. </div>
-        <a th:if="${session.logindto != null }" th:href="@{/board/boardwrite}"><button class="form-control">글쓰기</button></a>
-
-            <table class="table">
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-md-3">
+                <a th:href="@{/board/boardlist(keyword=null , search =null )}" class="nav-link link-dark">전체보기</a>
+            </div>
+            <div class="col-md-2 offset-7">
+                <div th:if="${session.logindto == null }" > * 로그인시 글쓰기 가능합니다. </div>
+                <a th:if="${session.logindto != null }" th:href="@{/board/boardwrite}" class="nav-link link-dark"><button class="form-control">글쓰기</button></a>
+            </div>
+        </div>
+            <table class="table table-hover">
                     <tr>
-                        <th> 번호 </th><th> 제목 </th><th> 작성자 </th>
-                        <th> 작성일 </th><th> 조회수 </th>
+                        <th width="5%"> 번호 </th>
+                        <th width="50%"> 제목 </th>
+                        <th width="20%"> 작성자 </th>
+                        <th width="20%"> 작성일 </th>
+                        <th width="5%"> 조회수 </th>
                     </tr>
                     <tr th:each="boardDto : ${BoardDtos}">
 
                         <td th:text="${boardDto.bnum}"> </td>
                         <td>
-                                <!--  JSP : <a href="boardview.jsp?b_num=boardDto.b_num ">
-                                       th :  <a th:href="@{ '기존경로[url] / ' + 변수 } ">
-                                -->
-                                <a th:href="@{ '/board/boardview/' + ${boardDto.bnum} } ">
+                                <a th:href="@{ '/board/boardview/' + ${boardDto.bnum} } " class="nav-link link-dark" >
                                     <span th:text="${boardDto.b_title}" onclick="ajax" ></span>
                                 </a>
                         </td>
