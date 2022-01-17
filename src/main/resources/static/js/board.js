@@ -54,14 +54,22 @@ function replywrite( bnum ){
 
     var rcontents = $("#rcontents").val();
 
+    // 댓글내용 미 입력시 댓글 저장 막기
+    if( rcontents == "" ){ alert("댓글 내용을 입력해주세요~~ "); return; }
     $.ajax({
         url : "/board/replywirte",
         data : { "bnum" : bnum , "rcontents" : rcontents } ,
         success : function( data ){
-               alert(data);
+               if( data == 1 ){
+                    // 특정 태그만 새로고침  [ jQuery ]
+                    $('#replytable').load( location.href+' #replytable' );
+                    // 댓글 입력창 공백
+                    $("#rcontents").val("");
+               }else if( data == 2 ) {
+                    alert("로그인후 사용 가능합니다" ); return;
+               }
         }
     });
-
 }
 
 

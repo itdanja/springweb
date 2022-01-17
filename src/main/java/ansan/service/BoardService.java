@@ -164,18 +164,34 @@ public class BoardService {
 
     // 댓글 등록
     public boolean replywirte( int bnum , String rcontents , String rwrite ){
+
         // 게시물번호에 해당하는 게시물 엔티티 출력
         Optional<BoardEntity> entityOptional =   boardRepository.findById( bnum );
 
         ReplyEntitiy replyEntitiy = ReplyEntitiy.builder()
                 .rcontents( rcontents )
                         .rwrite( rwrite )
-                                .boardEntity ( entityOptional.get() ) // 해당 게시물의 엔티티 넣기
+                                .boardEntity ( entityOptional.get() ) //  게시물->댓글 저장  [ 해당 게시물의 엔티티 넣기 ]
                                     .build();
 
-        replyRepository.save( replyEntitiy );
+        replyRepository.save( replyEntitiy ); // 댓글 저장
+
+        // 해당 게시물내 댓글 저장 [ 댓글 -> 게시물 저장 ]
+        entityOptional.get().getReplyEntitiys().add( replyEntitiy );
 
         return false;
+    }
+
+    // 모든 댓글 출력
+    public List< ReplyEntitiy > getreplylist( int bnum ){
+
+        // 1. 해당 게시물번호의 엔티티 호출
+         Optional<BoardEntity> entityOptional = boardRepository.findById(bnum);
+         // 2. 해당 엔티티의 댓글 리스트 호출
+        List<ReplyEntitiy> replyEntitiys =  entityOptional.get().getReplyEntitiys();
+
+        return replyEntitiys;
+
     }
 
 }

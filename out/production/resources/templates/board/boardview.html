@@ -42,18 +42,22 @@
             <div class="col-md-2"><button class="form-control p-3" th:onclick="replywrite( [[${ boardDto.b_num }]])">댓글등록</button></div>
         </div>
 
-        <table class="table">
+        <table class="table" id="replytable">
             <tr>
-                <th width="10%">작성자 <br> <span style="font-size:5px;">작성일</span> </th><th width="70%">내용</th><th width="10%">비고</th>
+                <th width="10%">작성자 <br> <span style="font-size:5px;">작성일</span> </th>
+                <th width="70%">내용</th>
+                <th width="10%">비고</th>
             </tr>
-            <tr>
-                <td> 유재석  <br> <span style="font-size:5px;">2022-01-17</span> </td><td>내용</td><td><button>삭제</button><button>수정</button></td>
-            </tr>
-            <tr>
-                <td> 유재석  <br> <span style="font-size:5px;">2022-01-17</span> </td><td>내용</td><td><button>삭제</button><button>수정</button></td>
-            </tr>
-            <tr>
-                <td> 유재석  <br> <span style="font-size:5px;">2022-01-17</span> </td><td>내용</td><td><button>삭제</button><button>수정</button></td>
+            <tr th:each="reply : ${replyEntitiys}">
+                <td>
+                    <div th:text="${reply.rwrite}" ></div>
+                    <div style="font-size:5px;" th:text="${ #temporals.format( reply.createdDate , 'MM-dd hh:mm') }" ></div>
+                </td>
+                <td th:text="${reply.rcontents}">내용</td>
+                <td>
+                    <button th:onclick="replydelete( [[ ${reply.rnum} ]])">삭제</button>
+                    <button>수정</button>
+                </td>
             </tr>
         </table>
     </div>

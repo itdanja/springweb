@@ -3,6 +3,7 @@ package ansan.controller;
 import ansan.domain.Dto.BoardDto;
 import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Board.BoardEntity;
+import ansan.domain.Entity.Board.ReplyEntitiy;
 import ansan.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -142,8 +146,15 @@ public class BoardController {
         BoardDto boardDto =  boardService.getboard( b_num );
         // 첨부파일 존재하면 uuid가 제거된 파일명 변환해서 b_realimg 담기
         if( boardDto.getB_img() != null ) boardDto.setB_realimg( boardDto.getB_img().split("_")[1] );
-
         model.addAttribute( "boardDto" , boardDto  );
+
+        // 해당 게시물번호의 댓글 호출
+       List<ReplyEntitiy> replyEntitiys =  boardService.getreplylist( b_num);
+
+       // 정렬후 -> 내림차순 [ 댓글번호 ]
+        Collections.reverse( replyEntitiys );
+
+        model.addAttribute( "replyEntitiys" , replyEntitiys  );
 
         return "board/boardview";
                 // 타임리프를 이용한 html 반환
@@ -213,10 +224,13 @@ public class BoardController {
         MemberDto memberDto =
                 (MemberDto)session.getAttribute("logindto");
 
+        if( memberDto == null  ){ // 로그인 세션이 없으면
+            return "2";
+        }
+
         boardService.replywirte( bnum , rcontents , memberDto.getM_id()  );
                                             // 게시물번호 , 댓글내용 , (로그인된)아이디디
-       return bnum + rcontents ;
-
+       return "1" ;
     }
 
 }

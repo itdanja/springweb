@@ -1,6 +1,7 @@
 package ansan.domain.Entity.Board;
 
 import ansan.domain.Entity.BaseTimeEntity;
+import ansan.domain.Entity.Member.MemberEntity;
 import lombok.*;
 
 import javax.persistence.*;

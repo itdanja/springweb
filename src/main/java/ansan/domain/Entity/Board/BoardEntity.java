@@ -2,6 +2,7 @@ package ansan.domain.Entity.Board;
 
 
 import ansan.domain.Entity.BaseTimeEntity;
+import ansan.domain.Entity.Member.MemberEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,5 +38,6 @@ public class BoardEntity extends BaseTimeEntity {
     // 여러개 댓글 저장할 리스트
     @OneToMany( mappedBy = "boardEntity")
     private List<ReplyEntitiy> replyEntitiys = new ArrayList<>();
+
 
 }
