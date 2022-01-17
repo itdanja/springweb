@@ -5,6 +5,8 @@ import ansan.domain.Dto.BoardDto;
 import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Board.BoardEntity;
 import ansan.domain.Entity.Board.BoardRepository;
+import ansan.domain.Entity.Board.ReplyEntitiy;
+import ansan.domain.Entity.Board.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -155,6 +157,25 @@ public class BoardService {
             System.out.println( e );
             return false;
         }
+    }
+
+    @Autowired
+    private ReplyRepository replyRepository;
+
+    // 댓글 등록
+    public boolean replywirte( int bnum , String rcontents , String rwrite ){
+        // 게시물번호에 해당하는 게시물 엔티티 출력
+        Optional<BoardEntity> entityOptional =   boardRepository.findById( bnum );
+
+        ReplyEntitiy replyEntitiy = ReplyEntitiy.builder()
+                .rcontents( rcontents )
+                        .rwrite( rwrite )
+                                .boardEntity ( entityOptional.get() ) // 해당 게시물의 엔티티 넣기
+                                    .build();
+
+        replyRepository.save( replyEntitiy );
+
+        return false;
     }
 
 }

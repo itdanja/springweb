@@ -204,4 +204,19 @@ public class BoardController {
         return "redirect:/board/boardview/"+b_num;
     }
 
+    @GetMapping("/board/replywirte")
+    @ResponseBody
+    public String replywirte( @RequestParam("bnum") int bnum  ,
+                              @RequestParam("rcontents") String rcontents  ){
+
+        HttpSession session = request.getSession();
+        MemberDto memberDto =
+                (MemberDto)session.getAttribute("logindto");
+
+        boardService.replywirte( bnum , rcontents , memberDto.getM_id()  );
+                                            // 게시물번호 , 댓글내용 , (로그인된)아이디디
+       return bnum + rcontents ;
+
+    }
+
 }
