@@ -60,13 +60,16 @@ public class RoomService {
                 catch ( Exception e ) { System.out.println("파일 저장 실패 : "+ e );}
                 // roomimg 엔티티 생성 [  해당 room엔티티 주입 ]
                 RoomimgEntity roomimgEntity = RoomimgEntity.builder().rimg( uuidfile ).roomEntity( roomEntitysaved ).build();
-                int roomimgnum = roomimgRepository.save( roomimgEntity ).getRimgnum();
+                roomimgRepository.save( roomimgEntity ).getRimgnum();
                 // room 엔티티내 roomimg리스트에 roomimg엔티티 주입
-                roomEntitysaved.getRoomimgEntities().add(  roomimgRepository.findById(roomimgnum).get() );
+                roomRepository.findById( rnum ).get().getRoomimgEntities().add( roomimgEntity  );
             }
         }
-
-
         return true;
+    }
+
+    // 모든 룸 가져오기
+    public List<RoomEntity> getroomlist(){
+        return roomRepository.findAll();
     }
 }

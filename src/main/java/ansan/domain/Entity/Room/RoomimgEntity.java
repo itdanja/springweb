@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity @Table(name = "Roomimg")
 @AllArgsConstructor @NoArgsConstructor
-@Getter @Setter @ToString @Builder
+@Getter @Setter @ToString( exclude="roomEntity" )@Builder
 public class RoomimgEntity extends BaseTimeEntity {
         //번호
         @Id // pk [ 기본키 : 테이블 1개당 기본키 1개 권장 ]
@@ -19,5 +19,6 @@ public class RoomimgEntity extends BaseTimeEntity {
         private String rimg;
         // 룸 관계
         @ManyToOne
+        @JoinColumn(name="rnum")
         private RoomEntity roomEntity;
 }

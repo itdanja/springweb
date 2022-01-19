@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:replace="header.html :: header" ></div>
+
+    <div class="container">
+        <div class="row" th:each = "room  : ${roomEntities}"> <!-- 룸리스트 반복문 -->
+
+            <div class="col-md-3">
+                <button type="button" class="btn btn-outline-info"   th:data-bs-target="${'#modal'+room.rnum}" data-bs-toggle="modal">
+                    <img th:src="@{ '/roomimg/'+${ room.roomimgEntities.get(0).rimg } }" width="100%">
+                </button>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div th:text="${room.rnum}"></div>
+                        <div th:text="${room.rname}"></div>
+                        <div th:text="${room.rprice}"></div>
+                        <div th:text="${room.rarea}"></div>
+                        <div th:text="${room.rmanagementfee}"></div>
+                        <div th:text="${room.rcompletiondate}"></div>
+                        <div th:text="${room.rindate}"></div>
+                        <div th:text="${room.rstructure}"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div th:text="${room.rfloor}"></div>
+                        <div th:text="${room.rkind}"></div>
+                        <div th:text="${room.raddress}"></div>
+                        <div th:text="${room.rcontents}"></div>
+                        <div th:text="${room.ractive}"></div>
+                        <div th:text="${room.rtrans}"></div>
+                        <div th:text="${room.memberEntity.m_id}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 사진 확대 모달 [ 중복 ]  -->
+            <div class="modal fade" th:id="${ 'modal'+ room.rnum }" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document"> <!-- modal-xl : 모달 1140px  modal-lg : 800px -->
+                    <div class="modal-content rounded-5 shadow">
+                        <div class="modal-header p-5 pb-4 border-bottom-0">
+                            <h2 class="fw-bold mb-0">방 이미지</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    <!-- 닫기 버튼 -->
+                        </div>
+                        <div class="modal-body p-5 pt-0">
+                            <!-- 캐러셀 -->
+                            <div th:id="${'carousel'+room.rnum}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+
+                                    <div class="carousel-item active" > <!-- 대표 이미지  -->
+                                        <img th:src="@{ '/roomimg/'+${ room.roomimgEntities.get(0).rimg } }"  class="d-block w-100">
+                                    </div>
+                                    <div class="carousel-item" th:each=" roomimg :  ${ room.roomimgEntities }"> <!-- 반복문 -->
+                                                                <!-- active : 현재 보고있는 이미지 설정 [  한곳에만 설정 ]  -->
+                                        <img th:src="@{ '/roomimg/' + ${roomimg.rimg} }" class="d-block w-100" alt="...">
+                                    </div>
+
+                                </div>
+                                <button class="carousel-control-prev" type="button" th:data-bs-target="${'#carousel'+room.rnum}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" th:data-bs-target="${'#carousel'+room.rnum}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div> <!-- row end -->
+    </div> <!-- controller end -->
+
+</body>
+</html>

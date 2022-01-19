@@ -27,7 +27,8 @@
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a th:href="@{/board/boardlist(keyword=null , search=null )}" class="nav-link px-2 link-dark">커뮤니티 </a></li>
-
+                <li><a th:if="${session.logindto != null }" th:href="@{/room/write}" class="nav-link px-2 link-dark">방등록 </a></li>
+                <li><a th:if="${session.logindto != null }" th:href="@{/admin/roomlist}" class="nav-link px-2 link-dark">방리스트[관리자] </a></li>
             </ul>
             <div class="col-md-3 text-end">
                 <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인</button>

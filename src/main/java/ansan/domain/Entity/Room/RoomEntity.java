@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor // 풀생성자 [ 롬복 ]
 @NoArgsConstructor // 빈생성자 [ 롬복 ]
 @Getter @Setter // 필드 get , set 메소드 [ 롬복 ]
-@ToString // ToString-> Object[ 객체의 주소값 ] : @ToString -> [ 모든 필드의 내용물 ]
+@ToString( exclude="memberEntity" ) // ToString-> Object[ 객체의 주소값 ] : @ToString -> [ 모든 필드의 내용물 ]
 @Builder // 객체 생성시 안정성 보장 [   new 생성자()  <---> Builder ] : 1.필드 주입순서X
 public class RoomEntity extends BaseTimeEntity {
 
