@@ -164,6 +164,12 @@ public class MemberService {
         }
         return false;  // 회원탈퇴 X
     }
+    // 회원번호 -> 회원엔티티 반환
+    public MemberEntity getmentitiy( int mnum){
+        Optional<MemberEntity> entityOptional
+                = memberRepository.findById(mnum);
+        return  entityOptional.get();
+    }
 }
 
 

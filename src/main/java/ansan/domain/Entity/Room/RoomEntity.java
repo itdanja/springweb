@@ -61,17 +61,15 @@ public class RoomEntity extends BaseTimeEntity {
      //거래방식 [ 전세 , 월세 , 매매 ]
      @Column( name = "rtrans")
      private String rtrans;
+
     //회원번호 관계
     @ManyToOne
+    @JoinColumn(name ="mnum" ) // 해당 필드 의 이름 [ 컬럼 = 열 = 필드 ]
     private MemberEntity memberEntity;
+
     //이미지 관계
     @OneToMany( mappedBy = "roomEntity" )
     private List<RoomimgEntity> roomimgEntities = new ArrayList<>();
-
-
-
-
-
 
 
 }

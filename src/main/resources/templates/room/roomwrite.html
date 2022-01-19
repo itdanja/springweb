@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:replace="header.html :: header" ></div>
+    <div class="container">
+        <form method="post" action="/room/writecontroller" enctype="multipart/form-data">
+            이름 : <input type="text" name="rname"> <br>
+            가격 : <input type="text" name="rprice"> <br>
+            면적 : <input type="text" name="rarea"> <br>
+            관리비 : <input type="text" name="rmanagementfee"> <br>
+            준공날짜 : <input type="date" name="rcompletiondate"> <br>
+            입주가능일 : <input type="date" name="rindate"> <br>
+            구조 : <input type="text" name="rstructure"> <br>
+            층/건물층수 : <input type="text" name="rfloor"> <br>
+            건물종류 : <input type="text" name="rkind"> <br>
+            주소 : <input type="text" name="raddress"> <br>
+            내용 : <input type="text" name="rcontents"> <br>
+            거래방식 : <input type="text" name="rtrans"> <br>
+            사진 : <input type="file" multiple="multiple" name="file">
+            <input type="submit" value="등록">
+        </form>
+
+    </div>
+</body>
+</html>
