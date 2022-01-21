@@ -39,6 +39,4 @@ public class MemberEntity extends BaseTimeEntity {
     @OneToMany( mappedBy ="memberEntity" )
     private List<RoomEntity> roomEntities = new ArrayList<>();
 
-
-
 }

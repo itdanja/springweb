@@ -15,13 +15,20 @@ import java.util.Map;
 public class RoomController {
     @Autowired
     private RoomService roomService;
+
     @GetMapping("/write") // 이동
     public String write(){
         return "room/roomwrite"; // 타임리프 반환 [ 앞에 / 제거 ]
     }
+
     @PostMapping("/writecontroller") // 처리
     public String writecontroller(RoomEntity roomEntity ,
-                                  @RequestParam("file") List<MultipartFile> files){
+                                  @RequestParam("file") List<MultipartFile> files ,
+                                  @RequestParam("addressy") Double addressy ,
+                                  @RequestParam("addressx") Double addressx){
+
+        roomEntity.setRaddress( roomEntity.getRaddress()+"," + addressy + "," + addressx  );
+
         roomService.write( roomEntity , files );
         return  "main";
     }

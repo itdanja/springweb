@@ -30,6 +30,7 @@ public class RoomService {
 
     // 저장
     public boolean write(RoomEntity roomEntity , List<MultipartFile> files){
+
         // 등록한 회원번호 찾기 [ 세션에 로그인정보 ]
         HttpSession session = request.getSession();
         MemberDto memberDto =  (MemberDto) session.getAttribute("logindto");
@@ -38,13 +39,16 @@ public class RoomService {
                 = memberService.getmentitiy( memberDto.getM_num() );
         // 룸엔티티에 회원 엔티티 넣기
         roomEntity.setMemberEntity( memberEntity );
-        // 방상태 : 첫등록시 검토중으로 설정
-        roomEntity.setRactive("검토중");
-        // 룸엔티티 저장후에 룸엔티티 번호 가져온다.
+
+            // 방상태 : 첫등록시 검토중으로 설정
+            roomEntity.setRactive("검토중");
+
+        // 룸엔티티 저장후에 룸엔티티 번호 가져온다. [ 왜?? 회원엔티티에 룸리스트에 저장 ]
         int rnum = roomRepository.save(roomEntity).getRnum();
         // 회원 엔티티 룸리스트에 룸엔티티 추가
         RoomEntity roomEntitysaved =  roomRepository.findById(rnum).get();
-        memberEntity.getRoomEntities().add(  roomEntitysaved );
+        memberEntity.getRoomEntities().add( roomEntitysaved );
+
         // 파일 처리
         String uuidfile = null;
         if( files.size() !=0 ) {

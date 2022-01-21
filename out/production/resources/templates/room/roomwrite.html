@@ -18,13 +18,25 @@
             구조 : <input type="text" name="rstructure"> <br>
             층/건물층수 : <input type="text" name="rfloor"> <br>
             건물종류 : <input type="text" name="rkind"> <br>
-            주소 : <input type="text" name="raddress"> <br>
+
+
+
+            <input type="text" id="sample5_address" placeholder="주소" name="raddress">
+            <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+            <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+
+            <input type="hidden" name="addressy"  id="addressy">
+            <input type="hidden" name="addressx"  id="addressx">
+
             내용 : <input type="text" name="rcontents"> <br>
             거래방식 : <input type="text" name="rtrans"> <br>
             사진 : <input type="file" multiple="multiple" name="file">
             <input type="submit" value="등록">
         </form>
-
     </div>
+
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b7c0acb1395b016fc6b2661dad73840f&libraries=services"></script>
+    <script th:src = "@{/js/roomwrite.js}"></script>
+
 </body>
 </html>
