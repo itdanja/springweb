@@ -6,32 +6,83 @@
 </head>
 <body>
 
-    <div th:replace="header.html :: header" ></div>
-    <div class="container">
-        <form method="post" action="/room/writecontroller" enctype="multipart/form-data">
-            이름 : <input type="text" name="rname"> <br>
-            가격 : <input type="text" name="rprice"> <br>
-            면적 : <input type="text" name="rarea"> <br>
-            관리비 : <input type="text" name="rmanagementfee"> <br>
-            준공날짜 : <input type="date" name="rcompletiondate"> <br>
-            입주가능일 : <input type="date" name="rindate"> <br>
-            구조 : <input type="text" name="rstructure"> <br>
-            층/건물층수 : <input type="text" name="rfloor"> <br>
-            건물종류 : <input type="text" name="rkind"> <br>
+
+<div th:replace="header.html :: header" ></div>
 
 
+    <div class="container my-3">
+        <h3 class="text-center  my-3"> 내 방 등록하기 </h3>
+        <form method="post" action="/room/writecontroller" enctype="multipart/form-data" class="row">
+            <div class="col-md-5 offset-1 border p-3 rounded-3 shadow p-3 mb-5 bg-body rounded  ">
 
-            <input type="text" id="sample5_address" placeholder="주소" name="raddress">
-            <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
-            <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control rounded-4" id="rname" name="rname" placeholder="이름">
+                        <label for="floatingInput">방이름</label>
+                    </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="rprice" name="rprice" placeholder="가격">
+                    <label for="floatingInput">가격</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="rarea" name="rarea" placeholder="면적">
+                    <label for="floatingInput">면적</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="rmanagementfee" name="rmanagementfee" placeholder="관리비">
+                    <label for="floatingInput">관리비</label>
+                </div>
 
-            <input type="hidden" name="addressy"  id="addressy">
-            <input type="hidden" name="addressx"  id="addressx">
 
-            내용 : <input type="text" name="rcontents"> <br>
-            거래방식 : <input type="text" name="rtrans"> <br>
-            사진 : <input type="file" multiple="multiple" name="file">
-            <input type="submit" value="등록">
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control rounded-4" id="rcompletiondate" name="rcompletiondate" placeholder="준공날짜">
+                    <label for="floatingInput">준공날짜</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control rounded-4" id="rindate" name="rindate" placeholder="입주가능일">
+                    <label for="floatingInput">입주가능일</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="rkind" name="rkind" placeholder="층수/전체층수">
+                    <label for="floatingInput">층수/전체층수</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control rounded-4" id="rcontents" name="rcontents" placeholder="내용">
+                    <label for="floatingInput">내용</label>
+                </div>
+
+
+            </div>
+            <div class="col-md-5 offset-1 border p-3 rounded-3 shadow p-3 mb-5 bg-body rounded  ">
+
+                거래방식
+                <div class=" mb-3 text-center ">
+                    <input type="radio"  name="rtrans" id="rtrans"  value="월세" >월세
+                    <input type="radio"  name="rtrans" id="rtrans"  value="전세" >전세
+                    <input type="radio"  name="rtrans" id="rtrans"  value="매매" >매매
+                    <input type="radio"  name="rtrans" id="rtrans"  value="분양+" >분양
+                </div>
+                구조
+                <div class=" mb-3 text-center ">
+                    <input type="radio"  name="rstructure" id="rstructure"  value="원룸" > 원룸
+                    <input type="radio"  name="rstructure" id="rstructure"  value="투룸" >투룸
+                    <input type="radio"  name="rstructure" id="rstructure"  value="쓰리룸" >쓰리룸
+                    <input type="radio"  name="rstructure" id="rstructure"  value="쓰리룸+" >쓰리룸+
+                </div>
+                <div class=" mb-3">
+                    <input type="file" multiple="multiple" class="form-control rounded-4" id="file" name="file">
+                </div>
+
+                <input type="text" id="sample5_address" placeholder="주소" name="raddress" class="form-control">
+                <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색" class="form-control"><br>
+                <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+
+                <input type="hidden" name="addressy"  id="addressy">
+                <input type="hidden" name="addressx"  id="addressx">
+
+            </div>
+            <div class= "offset-1 col-md-11 d-grid gap-2">
+                <input type="submit" value="내 방 등 록" class="btn btn-primary p-3 fs-3"> <!-- p: 안쫑여백 , m:바깥여백 , fs : 폰트사이즈 -->
+            </div>
         </form>
     </div>
 
