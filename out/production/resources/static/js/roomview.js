@@ -21,7 +21,7 @@
             // 통신
             // json 받을 url 매핑[요청]          //  응답
     $.get("/room/chicken.json", function(data) {
-        alert(data); // json 객체
+
         // 데이터에서 좌표 값을 가지고 마커를 표시합니다
         // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
         var markers = $(data.positions).map(function(i, position) {
@@ -31,9 +31,17 @@
             });
             // 마커에 클릭 이벤트를 등록한다 (우클릭 : rightclick)
                   kakao.maps.event.addListener(marker, 'click', function() {
-                      alert('마커를 클릭했습니다!');
-                  });
 
+                     // 커스텀 오버레이를 생성하고 지도에 표시한다 [
+                     		var customOverlay = new kakao.maps.CustomOverlay({
+                     			map: map,
+                     			content: "<div style='padding:0 5px;background:#fff;'> 방 등록번호 : "+position.rnum+"</div>" ,
+                     			position: new kakao.maps.LatLng(position.lat, position.lng), // 커스텀 오버레이를 표시할 좌표
+                     			xAnchor: 0.5, // 컨텐츠의 x 위치
+                     			yAnchor: 0 // 컨텐츠의 y 위치
+                     		});
+
+                  });
             return marker;
         });
         // 클러스터러에 마커들을 추가합니다

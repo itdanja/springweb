@@ -64,6 +64,7 @@ public class RoomController {
             JSONObject data = new JSONObject(); // 리스트 안에 들어가는 키:값
             data.put("lat" , roomEntity.getRaddress().split(",")[1] );      //  주소[0],위도[1],경도[2]
             data.put("lng" , roomEntity.getRaddress().split(",")[2] );      //  주소[0],위도[1],경도[2]
+            data.put("rnum" , roomEntity.getRnum() );
             jsonArray.add( data ); // 리스트에 저장
 
         }
