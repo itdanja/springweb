@@ -52,6 +52,8 @@ public class RoomController {
         // {"positions": [ {"lat": 37.27943075229118,lng": 127.01763998406159} }
         // { "키" : 리스트{ "키": 값1 , "키":값2 , "키": 값3 } }
         // jsonObject = { "positions" : jsonArray{ "키": 값1 , "키":값2 , "키": 값3 } }
+            // map = { 키 : 값 }
+        //   map객체 = { "키" : List[ map객체 , map객체 , map객체  ]  }
 
         JSONObject jsonObject = new JSONObject(); // json 전체 [ 응답 용 ]
         JSONArray jsonArray = new JSONArray(); // json 안에 들어가는 리스트
@@ -63,6 +65,7 @@ public class RoomController {
             data.put("lat" , roomEntity.getRaddress().split(",")[1] );      //  주소[0],위도[1],경도[2]
             data.put("lng" , roomEntity.getRaddress().split(",")[2] );      //  주소[0],위도[1],경도[2]
             jsonArray.add( data ); // 리스트에 저장
+
         }
 
         jsonObject.put("positions" ,  jsonArray );  // json 전체에 리스트 넣기
