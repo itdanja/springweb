@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -85,6 +86,19 @@ public class RoomService {
     public boolean delete( int rnum ){
         roomRepository.delete(  roomRepository.findById( rnum ).get() );
         return true;
+    }
+
+    // 특정 룸 상태변경
+    @Transactional // 업데이트시 필수!!!
+    public boolean activeupdate( int rnum , String upactive ){
+        RoomEntity roomEntity =
+                roomRepository.findById( rnum ).get(); // 엔티티 호출
+        if( roomEntity.getRactive().equals( upactive ) ){
+            // 선택 버튼의 상태와 기존 룸 상태가 동일하면 업데이트X
+            return false;
+        }else{
+            roomEntity.setRactive( upactive ); return true;
+        }
     }
 }
 

@@ -32,4 +32,14 @@ public class AdminControoler {
         return "1";
     }
 
+    // 방번호를 이용한 방 상태 변경
+    @GetMapping("/activeupdate")
+    @ResponseBody
+    public String activeupdate( @RequestParam("rnum") int rnum ,
+                                @RequestParam("upactive") String upactive) {
+        boolean result =
+                roomService.activeupdate( rnum , upactive );
+        if( result ){ return "1"; }
+        else{ return  "2"; }
+    }
 }

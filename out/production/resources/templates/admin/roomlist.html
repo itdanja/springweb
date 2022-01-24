@@ -45,7 +45,27 @@
                     <div class="col-md-2">
                         <div><button class="form-control my-2" th:data-bs-target="${'#delete'+room.rnum}" data-bs-toggle="modal"> 삭제 </button></div>
                         <div><button class="form-control my-2"> 수정 </button> </div>
-                        <div><button class="form-control my-2"> 상태변경 </button> </div>
+                        <div><button class="form-control my-2" th:data-bs-target="${'#active'+room.rnum}" data-bs-toggle="modal"> 상태변경 </button> </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--  룸 상태변경 모달  -->
+            <div class="modal fade" tabindex="-1" th:id="${ 'active'+ room.rnum }" data-bs-keyboard="false" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content rounded-4 shadow">
+                        <div class="modal-body p-4 text-center">
+                            <h5 class="mb-0"> 상태변경 </h5>
+                            <p class="mb-3" id="activemsg"> 룸 상태 변경 승인 </p>
+                        </div>
+                        <div class="modal-footer flex-nowrap p-0">
+                            <button type="button" class="btn btn-lg btn-link text-decoration-none col-2 m-0 rounded-0" style="font-size:8px" th:onclick="activeupdate([[${room.rnum}]]  , '검토중' ) "> 검토중<br>[거래불가] </button>
+                            <button type="button" class="btn btn-lg btn-link text-decoration-none col-2 m-0 rounded-0" style="font-size:8px" th:onclick="activeupdate([[${room.rnum}]]  , '거래승인' ) "> 거래승인<br>[거래대기중] </button>
+                            <button type="button" class="btn btn-lg btn-link text-decoration-none col-2 m-0 rounded-0" style="font-size:8px" th:onclick="activeupdate([[${room.rnum}]]  , '거래확인' )"> 거래확인<br>[개래완료승인대기] </button>
+                            <button type="button" class="btn btn-lg btn-link text-decoration-none col-2 m-0 rounded-0" style="font-size:8px" th:onclick="activeupdate([[${room.rnum}]]  , '거래완료승인' )"> 거래완료승인<br>[거래완료] </button>
+                            <button type="button" class="btn btn-lg btn-link text-decoration-none col-4 m-0 rounded-0" style="font-size:8px" data-bs-dismiss="modal"> 취소 </button>
+                        </div>
+
                     </div>
                 </div>
             </div>

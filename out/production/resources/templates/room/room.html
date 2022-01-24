@@ -42,7 +42,7 @@
     <div>
         <span th:text="${room.rcontents}"></span>
     </div> <hr>
-    <button class="form-control"> 문의하기 </button> <hr>
+    <button class="form-control"  data-bs-toggle="modal" data-bs-target="#question"> 문의하기 </button> <hr>
     매물정보
     <table class="table">
         <tr>  <td width="30%">관리비</td> <td width="70%" th:text="${room.rmanagementfee}"></td> </tr>
@@ -53,6 +53,22 @@
         <tr>  <td>상태</td> <td th:text="${room.ractive}"></td> </tr>
     </table>
 </div>
+
+    <div class="modal fade" tabindex="-1" id="question" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0"> 회원탈퇴 </h5>
+                    <p class="mb-3" id="deletemsg"> 회원탈퇴시 포인트 사라집니다. 환불불가 !!! </p>
+                    <input type="password" placeholder="비밀번호 확인" class="form-control" id="passwordconfirm">
+                </div>
+                <div class="modal-footer flex-nowrap p-0">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" onclick="mdelete()"><strong> 탈퇴 합니다.</strong></button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal"> 탈퇴 취소합니다. </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
