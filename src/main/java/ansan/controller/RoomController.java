@@ -74,6 +74,13 @@ public class RoomController {
         return jsonObject;
     }
 
+    // 방번호를 이용한 방정보 html 반환
+    @GetMapping("/getroom")
+    public String getroom( @RequestParam("rnum") int rnum ){
+
+        return "room/room"; // room html 반환
+    }
+
 
 
 

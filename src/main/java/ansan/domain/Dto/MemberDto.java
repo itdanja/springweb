@@ -24,6 +24,7 @@ public class MemberDto {
     private String m_grade; // 회원등급
     private LocalDateTime m_createdDate; // 회원 가입일
 
+
     // Dto -> entity
     public MemberEntity toentity(){
         return MemberEntity.builder()

@@ -1,0 +1,86 @@
+/* ----------------------------------------------------
+ Sidebar  : 사이드바 레이아웃
+---------------------------------------------------- */
+.sidebar {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin-left: -400px;  /* 사이드바가 숨겨지는 가로길이 */
+  width: 400px;         /* 사이드바 가로길이 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: white;        /* 사이드바 색상 */
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.sidebar.toggled {
+  margin-left: 0;
+}
+
+/* ----------------------------------------------------
+ Sidebar Brand   /* 사이드바 상단 내용 */
+---------------------------------------------------- */
+.sidebar-brand {
+  display: block;
+  width: 250px;
+  padding: 10px 20px 10px 20px;
+  font-size: 18px;
+  color: #bbb;
+  background: transparent;
+  font-weight: bold;
+}
+.sidebar-branda:hover {
+  text-decoration: none;
+  color: #fff;
+  background: transparent;
+}
+.sidebar-branda:active, .sidebar-branda:focus {
+  text-decoration: none;
+  color: #bbb;
+  background: transparent;
+}
+
+
+/* ----------------------------------------------------
+ Sidebar Nav : 사이드바 내용물
+---------------------------------------------------- */
+.sidebar-nav {
+  width: 400px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav ul {
+  margin: 0;
+  padding: 0;
+  background: rgba(200, 200, 200, 0.1);
+  list-style: none;
+}
+
+.sidebar-nav li {
+  line-height: 40px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  padding-left: 20px;
+  text-decoration: none;
+  color: #999;
+}
+.sidebar-nav li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+}
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+.sidebar-nav li a.active {
+  text-decoration: none;
+  color: #fff;
+  background: black;
+}
