@@ -8,7 +8,6 @@
 
     <div th:replace="header.html :: header" ></div>
 
-    <script th:src = "@{/js/roomlist.js}"></script>
 
     <div class="container">
         <div class="row" th:each = "room  : ${roomEntities}"> <!-- 룸리스트 반복문 -->
@@ -19,36 +18,66 @@
                 </button>
             </div>
             <div class="col-md-9">
+                <h4 th:text="${'룸 상태 : ' + room.ractive  + '( 방 등록번호 : ' + room.rnum + ')'   }"></h4>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div th:text="${'등록번호 : ' + room.rnum}"></div>
-                        <div th:text="${'이름 : ' + room.rname}"></div>
-                        <div th:text="${'주소 : ' + #strings.listSplit(room.raddress, ',' )[0] }"></div> <!-- 타임리프 split -->
-                                             <!-- 타임리프 split :  #strings.listSplit( 모델명 , '자르기기준')  -->
-                        <div th:text="${'내용 : ' + room.rcontents}"></div>
-                        <div th:text="${'거래방식 : ' + room.rtrans}"></div>
+                    <div class="col-md-6 fs-6">
+                        <table class="table">
+                            <tr><td>이름</td><td th:text="${room.rname}"></td></tr>
+                            <tr><td>주소</td><td th:text="${#strings.listSplit(room.raddress, ',' )[0] }"></td></tr> <!-- 타임리프 split :  #strings.listSplit( 모델명 , '자르기기준')  -->
+                            <tr><td>내용</td><td th:text="${ room.rcontents}"></td></tr>
+                            <tr><td>거래방식</td><td th:text="${room.rtrans}"></td></tr>
+                            <tr><td>층수/전체</td><td th:text="${ room.rfloor}"></td></tr>
+                            <tr><td>등록회원</td><td th:text="${ room.memberEntity.m_id}"></td></tr>
+                        </table>
                     </div>
-                    <div class="col-md-3">
-                        <div th:text="${'거래가 : ' + room.rprice}"></div>
-                        <div th:text="${'면적 : ' + room.rarea}"></div>
-                        <div th:text="${'관리비 : ' + room.rmanagementfee}"></div>
-                        <div th:text="${'건물종류 : ' + room.rkind}"></div>
-                        <div th:text="${'구조 : ' + room.rstructure}"></div>
+                    <div class="col-md-6 fs-6">
+                        <table class="table">
+                            <tr><td>거래가</td><td th:text="${room.rprice}"></td></tr>
+                            <tr><td>면적</td><td th:text="${room.rarea}"></td></tr>
+                            <tr><td>관리비</td><td th:text="${room.rmanagementfee }"></td></tr>
+                            <tr><td>건물종류</td><td th:text="${ room.rkind}"></td></tr>
+                            <tr><td>구조</td><td th:text="${room.rstructure}"></td></tr>
+                            <tr><td>입주일자</td><td th:text="${ room.rindate}"></td></tr>
+                            <tr><td>준공일자</td><td th:text="${ room.rcompletiondate}"></td></tr>
+                        </table>
                     </div>
-                    <div class="col-md-3">
-                        <div th:text="${'층수/전체 : ' + room.rfloor}"></div>
-                        <div th:text="${'입주일자 : ' + room.rindate}"></div>
-                        <div th:text="${'준공일자 : ' + room.rcompletiondate}"></div>
-                        <div th:text="${'등록회원 : ' + room.memberEntity.m_id}"></div>
-                        <div th:text="${'룸 상태 : ' + room.ractive}"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <div><button class="form-control my-2" th:data-bs-target="${'#delete'+room.rnum}" data-bs-toggle="modal"> 삭제 </button></div>
-                        <div><button class="form-control my-2"> 수정 </button> </div>
-                        <div><button class="form-control my-2" th:data-bs-target="${'#active'+room.rnum}" data-bs-toggle="modal"> 상태변경 </button> </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><button class="form-control my-2" th:data-bs-target="${'#delete'+room.rnum}" data-bs-toggle="modal"> 삭제 </button></div>
+                    <div class="col-md-4"><button class="form-control my-2" th:data-bs-target="${'#update'+room.rnum}" data-bs-toggle="modal"> 수정 </button> </div>
+                    <div class="col-md-4"><button class="form-control my-2" th:data-bs-target="${'#active'+room.rnum}" data-bs-toggle="modal"> 상태변경 </button> </div>
+                </div>
+            </div>
+
+            <!-- 수정 변경 모달 -->
+            <div class="modal fade" tabindex="-1" th:id="${ 'update'+ room.rnum }" data-bs-keyboard="false" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content rounded-4 shadow">
+                        <div class="modal-body p-4 text-center">
+                            <h5 class="mb-0"> 방 수정 </h5>
+                            <p class="mb-3" id="updatemsg"> 수정하고자 하는 내용을 선택해주세요!! </p>
+                        </div>
+                        <div class="modal-footer flex-nowrap p-0">
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rname' , [[${room.rname}]] , [[${room.rnum}]] )">이름 </button>  <!-- 필드명 , 기존값 , 룸번호 -->
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rprice', [[${room.rprice}]] , [[${room.rnum}]])">가격 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rarea', [[${room.rarea}]] , [[${room.rnum}]])">면적 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rmanagementfee', [[${room.rmanagementfee}]] , [[${room.rnum}]])">관리비</button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rcompletiondate', [[${room.rcompletiondate}]] , [[${room.rnum}]])">입주날짜 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rindate', [[${room.rindate}]] , [[${room.rnum}]])">준공날짜 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rstructure', [[${room.rstructure}]] , [[${room.rnum}]])">구조 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rfloor', [[${room.rfloor}]] , [[${room.rnum}]])">층수 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rkind', [[${room.rkind}]] , [[${room.rnum}]])">종류 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('raddress', [[${room.raddress}]] , [[${room.rnum}]])">주소 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rcontents', [[${room.rcontents}]] , [[${room.rnum}]])">내용 </button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-1 m-0 rounded-0 border-right" th:onclick="roomupdate('rtrans', [[${room.rtrans}]] , [[${room.rnum}]])">거래방식 </button>
+                        </div>
+                        <div class="modal-footer flex-nowrap p-0">
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-12 m-0 rounded-0" data-bs-dismiss="modal"> 취소 </button>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <!--  룸 상태변경 모달  -->
             <div class="modal fade" tabindex="-1" th:id="${ 'active'+ room.rnum }" data-bs-keyboard="false" data-bs-backdrop="static">
@@ -123,10 +152,12 @@
                 </div>
             </div>
 
-
-
         </div> <!-- row end -->
     </div> <!-- controller end -->
+
+
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b7c0acb1395b016fc6b2661dad73840f&libraries=services"></script>
+    <script th:src = "@{/js/roomlist.js}"></script>
 
 </body>
 </html>

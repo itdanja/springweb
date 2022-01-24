@@ -100,6 +100,16 @@ public class RoomService {
             roomEntity.setRactive( upactive ); return true;
         }
     }
+
+    // 방정보 수정
+    @Transactional
+    public boolean update( int rnum , String field , String newcontents  ){
+        RoomEntity roomEntity =  roomRepository.findById( rnum ).get();
+        if( field.equals("rname") ){   roomEntity.setRname( newcontents );     }
+        else if( field.equals("rprice") ){ roomEntity.setRprice( newcontents ); }
+        return true;
+    }
+
 }
 
 

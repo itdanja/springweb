@@ -26,7 +26,7 @@
         <div>
             <div class="fs-6"> 거래가 가능한 집이에요 <span th:text="${ #temporals.format( room.createdDate , 'yy-MM-dd') }"></span></div>
             <div th:text="${room.rname}" class="fs-6"></div>
-            <div th:text="${room.rtrans + #numbers.formatInteger(room.rprice, 0, 'COMMA') }" class="fs-4"></div>
+            <div th:text="${room.rtrans + room.rprice } " class="fs-4"></div>
             <div th:text="${ '등록번호 ' + room.rnum}" style="font-size:8px"></div>
         </div> <hr>
         <div>

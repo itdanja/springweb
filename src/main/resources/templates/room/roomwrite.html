@@ -46,10 +46,6 @@
                     <label for="floatingInput">층수/전체층수</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control rounded-4" id="rkind" name="rkind" placeholder="건물종류">
-                    <label for="floatingInput">건물종류</label>
-                </div>
-                <div class="form-floating mb-3">
                     <input type="text" class="form-control rounded-4" id="rcontents" name="rcontents" placeholder="내용">
                     <label for="floatingInput">내용</label>
                 </div>
@@ -57,6 +53,14 @@
 
             </div>
             <div class="col-md-5 offset-1 border p-3 rounded-3 shadow p-3 mb-5 bg-body rounded  ">
+                건물종류
+                <div class=" mb-3 text-center ">
+                    <input type="radio"  name="rkind" id="rkind"  value="아파트" >아파트
+                    <input type="radio"  name="rkind" id="rkind"  value="빌라" >빌라
+                    <input type="radio"  name="rkind" id="rkind"  value="오피스텔" >오피스텔
+                    <input type="radio"  name="rkind" id="rkind"  value="주택" >주택
+                </div>
+
                 거래방식
                 <div class=" mb-3 text-center ">
                     <input type="radio"  name="rtrans" id="rtrans"  value="월세" >월세

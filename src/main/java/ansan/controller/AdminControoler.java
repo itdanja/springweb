@@ -42,4 +42,16 @@ public class AdminControoler {
         if( result ){ return "1"; }
         else{ return  "2"; }
     }
+
+    // 방번호를 이용한 방 정보 변경
+    @GetMapping("/update")
+    @ResponseBody
+    public String update( @RequestParam("rnum") int rnum ,
+                          @RequestParam("field") String field ,
+                          @RequestParam("newcontents") String newcontents ){
+        roomService.update( rnum , field , newcontents );
+        return "1";
+    }
+
+
 }
