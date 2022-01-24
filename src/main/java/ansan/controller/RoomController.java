@@ -6,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,8 +77,8 @@ public class RoomController {
 
     // 방번호를 이용한 방정보 html 반환
     @GetMapping("/getroom")
-    public String getroom( @RequestParam("rnum") int rnum ){
-
+    public String getroom(@RequestParam("rnum") int rnum , Model model){
+        model.addAttribute( "room" ,  roomService.getroom(rnum) ) ;
         return "room/room"; // room html 반환
     }
 

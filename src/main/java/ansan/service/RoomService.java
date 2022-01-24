@@ -76,4 +76,33 @@ public class RoomService {
     public List<RoomEntity> getroomlist(){
         return roomRepository.findAll();
     }
+
+    // 특정 룸 가져오기
+    public RoomEntity getroom( int rnum ){
+        return roomRepository.findById( rnum ).get();
+    }
+    // 특정 룸 삭제
+    public boolean delete( int rnum ){
+        roomRepository.delete(  roomRepository.findById( rnum ).get() );
+        return true;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

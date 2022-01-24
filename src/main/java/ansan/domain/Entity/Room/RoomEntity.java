@@ -67,10 +67,9 @@ public class RoomEntity extends BaseTimeEntity {
     @JoinColumn(name ="mnum" ) // 해당 필드 의 이름 [ 컬럼 = 열 = 필드 ]
     private MemberEntity memberEntity;
 
-    //이미지 관계
-    @OneToMany( mappedBy = "roomEntity" )
+    //이미지 관계 // 룸 삭제/변경시 이미지도 같이 삭제/변경 [ 제약조건 : cascade = ALL ]
+    @OneToMany( mappedBy = "roomEntity" , cascade = CascadeType.ALL)
     private List<RoomimgEntity> roomimgEntities = new ArrayList<>();
-
 
 }
 

@@ -8,37 +8,64 @@
 
     <div th:replace="header.html :: header" ></div>
 
+    <script th:src = "@{/js/roomlist.js}"></script>
+
     <div class="container">
         <div class="row" th:each = "room  : ${roomEntities}"> <!-- 룸리스트 반복문 -->
 
             <div class="col-md-3">
-                <button type="button" class="btn btn-outline-info"   th:data-bs-target="${'#modal'+room.rnum}" data-bs-toggle="modal">
+                <button type="button" class="btn btn-outline-info"  th:data-bs-target="${'#modal'+room.rnum}" data-bs-toggle="modal">
                     <img th:src="@{ '/roomimg/'+${ room.roomimgEntities.get(0).rimg } }" width="100%">
                 </button>
             </div>
             <div class="col-md-9">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div th:text="${room.rnum}"></div>
-                        <div th:text="${room.rname}"></div>
-                        <div th:text="${room.rprice}"></div>
-                        <div th:text="${room.rarea}"></div>
-                        <div th:text="${room.rmanagementfee}"></div>
-                        <div th:text="${room.rcompletiondate}"></div>
-                        <div th:text="${room.rindate}"></div>
-                        <div th:text="${room.rstructure}"></div>
+                    <div class="col-md-3">
+                        <div th:text="${'등록번호 : ' + room.rnum}"></div>
+                        <div th:text="${'이름 : ' + room.rname}"></div>
+                        <div th:text="${'주소 : ' + #strings.listSplit(room.raddress, ',' )[0] }"></div> <!-- 타임리프 split -->
+                                             <!-- 타임리프 split :  #strings.listSplit( 모델명 , '자르기기준')  -->
+                        <div th:text="${'내용 : ' + room.rcontents}"></div>
+                        <div th:text="${'거래방식 : ' + room.rtrans}"></div>
                     </div>
-                    <div class="col-md-6">
-                        <div th:text="${room.rfloor}"></div>
-                        <div th:text="${room.rkind}"></div>
-                        <div th:text="${room.raddress}"></div>
-                        <div th:text="${room.rcontents}"></div>
-                        <div th:text="${room.ractive}"></div>
-                        <div th:text="${room.rtrans}"></div>
-                        <div th:text="${room.memberEntity.m_id}"></div>
+                    <div class="col-md-3">
+                        <div th:text="${'거래가 : ' + room.rprice}"></div>
+                        <div th:text="${'면적 : ' + room.rarea}"></div>
+                        <div th:text="${'관리비 : ' + room.rmanagementfee}"></div>
+                        <div th:text="${'건물종류 : ' + room.rkind}"></div>
+                        <div th:text="${'구조 : ' + room.rstructure}"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div th:text="${'층수/전체 : ' + room.rfloor}"></div>
+                        <div th:text="${'입주일자 : ' + room.rindate}"></div>
+                        <div th:text="${'준공일자 : ' + room.rcompletiondate}"></div>
+                        <div th:text="${'등록회원 : ' + room.memberEntity.m_id}"></div>
+                        <div th:text="${'룸 상태 : ' + room.ractive}"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div><button class="form-control my-2" th:data-bs-target="${'#delete'+room.rnum}" data-bs-toggle="modal"> 삭제 </button></div>
+                        <div><button class="form-control my-2"> 수정 </button> </div>
+                        <div><button class="form-control my-2"> 상태변경 </button> </div>
                     </div>
                 </div>
             </div>
+
+            <!--  룸 삭제 모달  -->
+            <div class="modal fade" tabindex="-1" th:id="${ 'delete'+ room.rnum }" data-bs-keyboard="false" data-bs-backdrop="static">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content rounded-4 shadow">
+                        <div class="modal-body p-4 text-center">
+                            <h5 class="mb-0"> 방삭제 </h5>
+                            <p class="mb-3" id="deletemsg"> 방 삭제시 복구가 불가능합니다. 정말 삭제 하시겠습니까? </p>
+                        </div>
+                        <div class="modal-footer flex-nowrap p-0">
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" th:onclick="rdelete([[${room.rnum}]])"><strong> 삭제 합니다.</strong></button>
+                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal"> 삭제 취소합니다. </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- 사진 확대 모달 [ 중복 ]  -->
             <div class="modal fade" th:id="${ 'modal'+ room.rnum }" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
@@ -75,6 +102,7 @@
                     </div>
                 </div>
             </div>
+
 
 
         </div> <!-- row end -->

@@ -1,5 +1,59 @@
 <body>
 
-    ajax 통해 반환된 html
+    <div class="container">
+    <!-- 캐러셀 -->
+        <div th:id="${'carousel'+room.rnum}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active" > <!-- 대표 이미지  -->
+                    <img th:src="@{ '/roomimg/'+${ room.roomimgEntities.get(0).rimg } }"  class="d-block w-100">
+                </div>
+                <div class="carousel-item" th:each=" roomimg :  ${ room.roomimgEntities }"> <!-- 반복문 -->
+                    <!-- active : 현재 보고있는 이미지 설정 [  한곳에만 설정 ]  -->
+                    <img th:src="@{ '/roomimg/' + ${roomimg.rimg} }" class="d-block w-100" alt="...">
+                </div>
+
+            </div>
+            <button class="carousel-control-prev" type="button" th:data-bs-target="${'#carousel'+room.rnum}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" th:data-bs-target="${'#carousel'+room.rnum}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div>
+            <div class="fs-6"> 거래가 가능한 집이에요 <span th:text="${ #temporals.format( room.createdDate , 'yy-MM-dd') }"></span></div>
+            <div th:text="${room.rname}" class="fs-6"></div>
+            <div th:text="${room.rtrans + #numbers.formatInteger(room.rprice, 0, 'COMMA') }" class="fs-4"></div>
+            <div th:text="${ '등록번호 ' + room.rnum}" style="font-size:8px"></div>
+        </div> <hr>
+        <div>
+            <table>
+                    <tr> <th width="30%">면적(전용)</th><th width="30%">층</th> <th width="30%">구조</th> </tr>
+                    <tr>
+                        <td th:text="${room.rarea}"></td>
+                        <td th:text="${room.rfloor}"></td>
+                        <td th:text="${room.rstructure}"></td>
+                    </tr>
+        </table>
+    </div> <hr>
+    <div>
+        <span th:text="${room.rcontents}"></span>
+    </div> <hr>
+    <button class="form-control"> 문의하기 </button> <hr>
+    매물정보
+    <table class="table">
+        <tr>  <td width="30%">관리비</td> <td width="70%" th:text="${room.rmanagementfee}"></td> </tr>
+        <tr>  <td>준공날짜</td> <td th:text="${room.rcompletiondate}"></td> </tr>
+        <tr>  <td>입주가능일</td> <td th:text="${room.rindate}"></td> </tr>
+        <tr>  <td>건물종류</td> <td th:text="${room.rkind}"></td> </tr>
+        <tr>  <td>주소</td> <td th:text="${room.raddress}"></td> </tr>
+        <tr>  <td>상태</td> <td th:text="${room.ractive}"></td> </tr>
+    </table>
+</div>
 
 </body>
+
+
