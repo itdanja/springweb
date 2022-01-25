@@ -152,6 +152,12 @@ public class RoomService {
                 memberService.getmentitiy( memberDto.getM_num() );
         return memberEntity.getNoteEntities();
     }
+    // 답변 등록
+    @Transactional
+    public boolean notereplywrite( int nnum , String nreply ) {
+        noteRepository.findById(nnum).get().setNreply( nreply );
+        return  true;
+    }
 }
 
 

@@ -172,6 +172,14 @@ public class MemberController {
     @Autowired
     private RoomService roomService;
 
+    @GetMapping("/member/notereplywrite")
+    @ResponseBody
+    public String notereplywrite( @RequestParam("nnum") int nnum ,
+                                  @RequestParam("nreply") String nreply  ){
+        roomService.notereplywrite( nnum ,  nreply );
+        return "1";
+    }
+
 }
 
 
