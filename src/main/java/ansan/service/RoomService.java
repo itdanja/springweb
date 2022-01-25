@@ -25,6 +25,9 @@ public class RoomService {
     private MemberService memberService;
     @Autowired
     private RoomimgRepository roomimgRepository;
+    @Autowired
+    private NoteRepository noteRepository;
+
 
     // 저장
     public boolean write(RoomEntity roomEntity , List<MultipartFile> files){
@@ -129,9 +132,26 @@ public class RoomService {
         memberService.getmentitiy( memberDto.getM_num() ).getNoteEntities().add(  noteRepository.findById(nnum).get()  );
         return true; // 등록 성공
     }
-    @Autowired
-    private NoteRepository noteRepository;
 
+
+    // 로그인 된 회원이 등록한 방 출력
+    public List<RoomEntity> getmyroomlist(  ){
+        HttpSession session = request.getSession();
+        MemberDto memberDto =
+                (MemberDto)session.getAttribute("logindto");
+        MemberEntity memberEntity =
+                memberService.getmentitiy( memberDto.getM_num() );
+        return memberEntity.getRoomEntities();
+    }
+    // 로그인 된 회원이 등록한 문의 출력
+    public List<NoteEntity> getmynotelist( ){
+        HttpSession session = request.getSession();
+        MemberDto memberDto =
+                (MemberDto)session.getAttribute("logindto");
+        MemberEntity memberEntity =
+                memberService.getmentitiy( memberDto.getM_num() );
+        return memberEntity.getNoteEntities();
+    }
 }
 
 

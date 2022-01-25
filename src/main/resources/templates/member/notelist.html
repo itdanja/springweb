@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:replace="header.html :: header" ></div>
+        <div class="container">
+            <h3> 받은 쪽지 </h3>
+            <table class="table">
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.rnum}"></td>
+                    <td th:text="${room.rname}"></td>
+                    <td>
+                            <div th:each = "note : ${room.noteEntities}">
+                                <span th:text="${ '보낸사람 : ' + note.memberEntity.m_id}"></span>
+                                <span th:text="${ '내용 : ' + note.ncontents}"></span>
+                                <span th:text="${ '보낸날짜 : ' + note.createdDate}"></span>
+                                <span th:if="${note.nreply != null}">답변완료 </span>
+                                <span th:if="${note.nreply == null}"><button> 답변하기 </button></span>
+                            </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    <div class="container">
+        <h3> 보낸 쪽지 </h3>
+        <table class="table">
+            <tr th:each="note : ${notes}">
+                <td th:text="${note.roomEntity.rnum}"></td>
+                <td th:text="${note.roomEntity.rname}"></td>
+                <td>
+                        <span th:text="${ '내용 : ' + note.ncontents}"></span>
+                        <span th:text="${ '보낸날짜 : ' + note.createdDate}"></span>
+                        <span th:if="${note.nreply != null}">답변완료 </span>
+                        <span th:if="${note.nreply == null}">답변대기중</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    </div>
+
+
+
+</body>
+</html>
