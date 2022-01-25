@@ -53,3 +53,41 @@
         // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
         map.setLevel(level, {anchor: cluster.getCenter()});
     });
+
+
+// 문의 버튼 클릭 이벤트
+function notewrite( rnum ){
+
+    var ncontents =  $("#ncontents").val() ;
+
+    $.ajax({
+        url : "/room/notewrite",
+        data : { "rnum" : rnum , "ncontents" : ncontents } ,
+        success : function( data ){
+            if( data == 1 ){
+                alert("정상적으로 문의가 되었습니다.");
+                $("#ncontents").val("") ; // 내용물 초기화
+                $("#notemodal").modal("hide");  // 모달 종료
+            }else if( data == 2 ){
+                alert("로그인후 문의가 가능합니다.");
+                // 로그인창 모달 띄우기
+                $("#ncontents").val("") ; // 내용물 초기화
+                $("#notemodal").modal("hide");  // 모달 종료
+                $("#modallogin").modal("show");  // 모달 실행
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

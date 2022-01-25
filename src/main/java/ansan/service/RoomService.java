@@ -3,10 +3,7 @@ package ansan.service;
 import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Member.MemberEntity;
 import ansan.domain.Entity.Member.MemberRepository;
-import ansan.domain.Entity.Room.RoomEntity;
-import ansan.domain.Entity.Room.RoomRepository;
-import ansan.domain.Entity.Room.RoomimgEntity;
-import ansan.domain.Entity.Room.RoomimgRepository;
+import ansan.domain.Entity.Room.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -109,6 +106,31 @@ public class RoomService {
         else if( field.equals("rprice") ){ roomEntity.setRprice( newcontents ); }
         return true;
     }
+
+    // 문의 등록
+    public boolean notewrite( int rnum , String ncontents ) {
+
+        // 로그인된 회원정보를 가져온다. [ 작성자 ]
+        HttpSession session = request.getSession();
+        MemberDto memberDto =
+                (MemberDto)session.getAttribute("logindto");
+        // 만약에 로그인이 안되어 있으면
+        if( memberDto == null ){ return  false; } // 등록 실패
+        // 문의 엔티티 생성
+        NoteEntity noteEntity = new NoteEntity();
+            noteEntity.setNcontents( ncontents ); // 작성내용
+            noteEntity.setMemberEntity(  memberService.getmentitiy( memberDto.getM_num()) ); // 작성자 엔티티
+            noteEntity.setRoomEntity( roomRepository.findById( rnum ).get() );  // 방 엔티티
+        // 문의 엔티티 저장
+        int nnum =  noteRepository.save( noteEntity ).getNnum(); //
+        // 해당 룸엔티티의 문의리스트에 문의엔티티 저장
+        roomRepository.findById( rnum ).get().getNoteEntities().add( noteRepository.findById(nnum).get()  );
+        // 해당 회원엔티티의 문의리스트에 문의엔티티 저장
+        memberService.getmentitiy( memberDto.getM_num() ).getNoteEntities().add(  noteRepository.findById(nnum).get()  );
+        return true; // 등록 성공
+    }
+    @Autowired
+    private NoteRepository noteRepository;
 
 }
 

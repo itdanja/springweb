@@ -82,6 +82,20 @@ public class RoomController {
         return "room/room"; // room html 반환
     }
 
+    // 문의 등록
+    @GetMapping("/notewrite")
+    @ResponseBody
+    public String notewrite ( @RequestParam("rnum") int rnum ,
+                              @RequestParam("ncontents") String ncontents ) {
+
+        boolean result = roomService.notewrite( rnum , ncontents );
+        if( result ){ return "1"; }
+        else{ return "2"; }
+
+    }
+
+
+
 
 
 
