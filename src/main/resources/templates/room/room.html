@@ -1,7 +1,9 @@
+<head>
+    <link th:href="@{/css/room.css}" rel="stylesheet">
+</head>
 <body>
-
-    <div class="container">
-    <!-- 캐러셀 -->
+<div class="container">
+        <!-- 캐러셀 -->
         <div th:id="${'carousel'+room.rnum}" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
 
@@ -24,34 +26,72 @@
             </button>
         </div>
         <div>
-            <div class="fs-6"> 거래가 가능한 집이에요 <span th:text="${ #temporals.format( room.createdDate , 'yy-MM-dd') }"></span></div>
-            <div th:text="${room.rname}" class="fs-6"></div>
-            <div th:text="${room.rtrans + room.rprice } " class="fs-4"></div>
-            <div th:text="${ '등록번호 ' + room.rnum}" style="font-size:8px"></div>
+            <div style="font-size:12px" class="my-1"> 거래가 가능한 집이에요 </div>
+            <div th:text="${room.rname}" class="fs-6 my-1"></div>
+            <span th:text="${room.rtrans}" class="fs-5 my-3 mr-3"></span> <span th:text="${ room.rprice}" class="fs-5"></span>
+            <div th:text="${ '등록번호 ' + room.rnum}" class="my-1" style="font-size:12px"></div>
         </div> <hr>
         <div>
-            <table>
-                    <tr> <th width="30%">면적(전용)</th><th width="30%">층</th> <th width="30%">구조</th> </tr>
-                    <tr>
-                        <td th:text="${room.rarea}"></td>
-                        <td th:text="${room.rfloor}"></td>
-                        <td th:text="${room.rstructure}"></td>
-                    </tr>
-        </table>
-    </div> <hr>
-    <div>
-        <span th:text="${room.rcontents}"></span>
-    </div> <hr>
-    <button class="form-control" > 문의하기 </button> <hr>
-    매물정보
-    <table class="table">
-        <tr>  <td width="30%">관리비</td> <td width="70%" th:text="${room.rmanagementfee}"></td> </tr>
-        <tr>  <td>준공날짜</td> <td th:text="${room.rcompletiondate}"></td> </tr>
-        <tr>  <td>입주가능일</td> <td th:text="${room.rindate}"></td> </tr>
-        <tr>  <td>건물종류</td> <td th:text="${room.rkind}"></td> </tr>
-        <tr>  <td>주소</td> <td th:text="${room.raddress}"></td> </tr>
-        <tr>  <td>상태</td> <td th:text="${room.ractive}"></td> </tr>
-    </table>
+            <table class="table text-center">
+                <tr> <th width="25%">면적(전용)</th><th width="25%">층</th> <th width="25%">구조</th> <th width="25%">건물종류</th> </tr>
+                <tr>
+                    <td th:text="${room.rarea}"></td>
+                    <td th:text="${room.rfloor}"></td>
+                    <td th:text="${room.rstructure}"></td>
+                    <td th:text="${room.rkind}"></td>
+                </tr>
+            </table>
+        </div> <hr>
+        <div>
+            <span th:text="${room.rcontents}"></span>
+        </div> <hr>
+        <button class="form-control" data-bs-target="#notemodal" data-bs-toggle="modal"> 문의하기 </button> <hr>
+        <h5 class="text-center">매물정보</h5>
+
+        <div class="row">
+            <div class="col-md-4"><sapn>등록일</sapn></div>
+            <div class="col-md-8"><sapn th:text="${ #temporals.format( room.createdDate , 'yy-MM-dd') }"></sapn></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><sapn>관리비</sapn></div>
+            <div class="col-md-8"><sapn th:text="${room.rmanagementfee}"></sapn></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><sapn>준공날짜</sapn></div>
+            <div class="col-md-8"><sapn th:text="${room.rcompletiondate}"></sapn></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><sapn>입주가능일</sapn></div>
+            <div class="col-md-8"><sapn th:text="${room.rindate}"></sapn></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><sapn>주소</sapn></div>
+            <div class="col-md-8"><sapn th:text="${#strings.listSplit(room.raddress, ',' )[0] }"></sapn></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><sapn>상태</sapn></div>
+            <div class="col-md-8"><sapn th:text="${room.ractive}"></sapn></div>
+        </div>
+        <hr>
+        <h5 class="text-center"> 방 등록자 정보 </h5>
+    </div>
+
+
+<!--   문의 모달  -->
+<div class="modal fade" tabindex="-1" id="notemodal" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-body p-4 text-center">
+                <h5 class="mb-0"> 방 문의하기 </h5>
+                <p class="mb-3" id="notemsg"> 방 주인에게 문의하기 </p>
+                <textarea class="form-control" rows="10" id="ncontents"></textarea>
+            </div>
+            <div class="modal-footer flex-nowrap p-0">
+                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" th:onclick="notewrite([[${room.rnum}]])"><strong> 문의 합니다.</strong></button>
+                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal"> 문의 취소합니다. </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 

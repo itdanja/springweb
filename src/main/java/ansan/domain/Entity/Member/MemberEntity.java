@@ -1,6 +1,7 @@
 package ansan.domain.Entity.Member;
 
 import ansan.domain.Entity.BaseTimeEntity;
+import ansan.domain.Entity.Room.NoteEntity;
 import ansan.domain.Entity.Room.RoomEntity;
 import lombok.*;
 import javax.persistence.*;
@@ -38,5 +39,9 @@ public class MemberEntity extends BaseTimeEntity {
     // 룸 리스트
     @OneToMany( mappedBy ="memberEntity" )
     private List<RoomEntity> roomEntities = new ArrayList<>();
+
+    // 문의 리스트
+    @OneToMany( mappedBy ="memberEntity" )
+    private List<NoteEntity> noteEntities = new ArrayList<>();
 
 }

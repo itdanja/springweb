@@ -71,6 +71,10 @@ public class RoomEntity extends BaseTimeEntity {
     @OneToMany( mappedBy = "roomEntity" , cascade = CascadeType.ALL)
     private List<RoomimgEntity> roomimgEntities = new ArrayList<>();
 
+    // 문의 글 리스트
+    @OneToMany( mappedBy = "roomEntity" , cascade = CascadeType.ALL)
+    private List<NoteEntity> noteEntities = new ArrayList<>();
+
 }
 
 

@@ -53,3 +53,25 @@
         // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
         map.setLevel(level, {anchor: cluster.getCenter()});
     });
+
+
+// 문의 버튼 클릭 이벤트
+function notewrite( rnum ){
+
+    alert( rnum );
+    alert( $("#ncontents").val() );
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
