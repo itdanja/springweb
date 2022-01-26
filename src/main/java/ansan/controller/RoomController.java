@@ -91,8 +91,18 @@ public class RoomController {
         boolean result = roomService.notewrite( rnum , ncontents );
         if( result ){ return "1"; }
         else{ return "2"; }
-
     }
+
+    // 읽음처리 업데이트
+    @GetMapping("/nreadupdate")
+    @ResponseBody
+    public void  nreadupdate(
+            @RequestParam("nnum") int nnum){
+        roomService.nreadupdate( nnum);
+    }
+
+
+
 
 
 
