@@ -52,13 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {  // 인증 관련 보안
-
         auth.userDetailsService(memberService).passwordEncoder( passwordEncoder());
-
     }
-
-
-
     @Autowired
     public PasswordEncoder passwordEncoder(){   // 패스워드 암호화 관련 클래스
         return new BCryptPasswordEncoder();
@@ -66,7 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
 
     @Override
     public void configure(WebSecurity web) throws Exception {   // 웹 리소스 접근 보안
-        super.configure(web);
     }
 
 

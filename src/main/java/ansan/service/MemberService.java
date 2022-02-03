@@ -198,6 +198,7 @@ public class MemberService implements UserDetailsService {
         // 찾은 회원엔티티의 권한[키] 을 리스트에 담기
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add( new SimpleGrantedAuthority( memberEntity.getRoleKey() ) ) ;
+                                // GrantedAuthority : 권한 [ 키 저장 가능한 클래스 ]
 
         // 회원정보와 권한을 갖는 UserDetails 반환
         return new IntergratedDto( memberEntity , authorities );
