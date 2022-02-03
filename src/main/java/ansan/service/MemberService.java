@@ -3,10 +3,12 @@ package ansan.service;
 import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Member.MemberEntity;
 import ansan.domain.Entity.Member.MemberRepository;
+import ansan.domain.Entity.Member.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
@@ -26,22 +28,29 @@ public class MemberService {
 
     // 회원등록 메소드
     public boolean membersignup( MemberDto memberDto ){
+        // 패스워드 암호화 [ BCryptPasswordEncoder ]
+        // 1. 암호화 클래스 객체 생성
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        // 2. 입력받은 memberDto내 패스워드 재설정 [ 암호화객체명.encode( 입력받은 패스워드 )   ]
+        memberDto.setM_password( passwordEncoder.encode( memberDto.getM_password() ) );
+
         memberRepository.save( memberDto.toentity()  );  // save(entity) : insert / update :  Entity를 DB에 저장
         return true;
     }
-    // 회원 로그인 메소드
-    public MemberDto login(MemberDto memberDto ){
-        List<MemberEntity>  memberEntityList =  memberRepository.findAll();
-        for( MemberEntity memberEntity :  memberEntityList ){
-            if( memberEntity.getM_id().equals( memberDto.getM_id()) &&
-                memberEntity.getM_password().equals(memberDto.getM_password())){
-                return MemberDto.builder()
-                        .m_id( memberEntity.getM_id() )
-                        .m_num( memberEntity.getM_num() ) .build();
-            }
-        }
-        return null;
-    }
+
+//    // 회원 로그인 메소드 [ 스프링시큐리티 사용시 로그인처리 메소드 제공 받기 때문에 사용X ]
+//    public MemberDto login(MemberDto memberDto ){
+//        List<MemberEntity>  memberEntityList =  memberRepository.findAll();
+//        for( MemberEntity memberEntity :  memberEntityList ){
+//            if( memberEntity.getMid().equals( memberDto.getM_id()) &&
+//                memberEntity.getM_password().equals(memberDto.getM_password())){
+//                return MemberDto.builder()
+//                        .m_id( memberEntity.getMid() )
+//                        .m_num( memberEntity.getM_num() ) .build();
+//            }
+//        }
+//        return null;
+//    }
 
     // 회원 아이디 찾기
     public String findid( MemberDto memberDto ){
@@ -53,7 +62,7 @@ public class MemberService {
             if( memberEntity.getM_name().equals(memberDto.getM_name()) &&
                 memberEntity.getM_email().equals( memberDto.getM_email() )){
                 // 4. 아이디를 반환한다
-                return memberEntity.getM_id();
+                return memberEntity.getMid();
             }
         }
         // 5. 만약에 동일한 정보가 없으면
@@ -110,7 +119,7 @@ public class MemberService {
         // 2. 모든 엔티티 반복문 돌려서 엔티티 하나씩 가쟈오기
         for( MemberEntity memberEntity : memberEntities ) {
             // 3. 해당 엔티티가 입력한 아이디와 동일하면
-            if (memberEntity.getM_id().equals(m_id)) {
+            if (memberEntity.getMid().equals(m_id)) {
                 return true; // 중복
             }
         }
@@ -139,7 +148,7 @@ public class MemberService {
             Optional<MemberEntity> entityOptional = memberRepository.findById(m_num);
             // 2. 찾은 entity를 dto 변경후 반환 [ 패스워드 , 수정날짜 제외 ]
             return MemberDto.builder()
-                    .m_id( entityOptional.get().getM_id() )
+                    .m_id( entityOptional.get().getMid() )
                     .m_name( entityOptional.get().getM_name() )
                     .m_address( entityOptional.get().getM_address() )
                     .m_email( entityOptional.get().getM_email() )

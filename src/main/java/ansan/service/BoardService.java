@@ -53,33 +53,16 @@ public class BoardService {
         if (  keyword !=null && keyword.equals("b_write") ) return boardRepository.findAllwrite( search , pageable );
 
         return boardRepository.findAll( pageable );
+
     }
 
     // 모든 글출력 메소드[ 페이징처리 x ]
 /*    public ArrayList<BoardDto> boardlist(){
 
-        // 게시물 번호를 정렬해서 엔티티 호출하기
-        // SQL : Select * from board order by 필드명 DESC
-        // JPA : boardRepository.findAll( Sort.by( Sort.Direction.DESC , "entity 필드명" ) );
-
-        List<BoardEntity> boardEntities
-                = boardRepository.findAll( Sort.by( Sort.Direction.DESC , "createdDate" ) ); // 모든 엔티티 호출
-
         ArrayList<BoardDto> boardDtos = new ArrayList<>(); // 모든 dto 담을 리스트 선언
         for( BoardEntity boardEntity : boardEntities ){ // 모든 엔티티를 반복하면서 하나씩 꺼내오기
             // 엔티티 -> dto 변환
 
-            // 게시물 작성일 날짜형 변환 [ LocalDateTime -> String ]
-                // LocalDateTime.format( DateTimeFormatter.ofPattern("yy-MM-dd") ) ;
-            String date = boardEntity.getCreatedDate().format( DateTimeFormatter.ofPattern("yy-MM-dd") );
-            // 오늘날짜 [ LocalDateTime -> String ]
-            String nowdate = LocalDateTime.now().format ( DateTimeFormatter.ofPattern("yy-MM-dd") );
-            // 만약에 게시물 작성일이 오늘이면 시간출력 오늘이 아니면 날짜를 출력
-            if( date.equals( nowdate ) ){
-                date = boardEntity.getCreatedDate().format( DateTimeFormatter.ofPattern("hh:mm:ss") );
-            }
-
-            System.out.println(  nowdate );
             BoardDto boardDto = new BoardDto(
                     boardEntity.getB_num() ,
                     boardEntity.getB_title() ,
