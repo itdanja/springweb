@@ -37,7 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
                     .defaultSuccessUrl("/") // 로그인 성공시 이동할 URL
                     .usernameParameter("mid")       // 시큐리티 로그인[ 아이디 ] 기본값은 : username  -> mid 으로 변수명 사용
                     .passwordParameter("m_password") // 시큐리티 로그인 [ 패스워드 ] 기본값은 : password -> m_password 으로 변수명 사용
-                    .permitAll()   // 로그인은 모든 권한이 접근 가능
                 .and()
                     .logout()   // 로그아웃 관련 설정
                     .logoutRequestMatcher( new AntPathRequestMatcher("/member/logout") ) // 로그아웃 URL 설정

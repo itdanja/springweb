@@ -1,5 +1,6 @@
 package ansan.service;
 
+import ansan.domain.Dto.IntergratedDto;
 import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Member.MemberEntity;
 import ansan.domain.Entity.Member.MemberRepository;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -186,9 +190,17 @@ public class MemberService implements UserDetailsService {
     @Override   // /member/logincontroller URL 호출시 실행되는 메소드 [ 로그인처리(인증처리) 메소드 ]
     public UserDetails loadUserByUsername(String mid ) throws UsernameNotFoundException {
 
-        System.out.println( "로그인시 입력된 아이디 : " +  mid );
+        // 회원 아이디로 회원엔티티 찾기
+        Optional<MemberEntity> entityOptional = memberRepository.findBymid( mid );
+        MemberEntity memberEntity = entityOptional.orElse(null);
+                                                        //   .orElse( null ) : 만약에 엔티티가 없으면 null
 
-        return null;
+        // 찾은 회원엔티티의 권한[키] 을 리스트에 담기
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add( new SimpleGrantedAuthority( memberEntity.getRoleKey() ) ) ;
+
+        // 회원정보와 권한을 갖는 UserDetails 반환
+        return new IntergratedDto( memberEntity , authorities );
     }
 
 }
