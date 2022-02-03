@@ -48,32 +48,32 @@ public class MemberController {
         return "redirect:/";  // 회원가입 성공시 메인페이지 연결
     }
 
-    // 로그인처리
-    @PostMapping("/member/logincontroller")
-    @ResponseBody
-    public String logincontroller( @RequestBody MemberDto memberDto ){
-                                             // 폼 사용시에는 자동주입 O
-                                             // AJAX 사용시에는 자동주입 X -> @RequestBody
-          MemberDto loginDto =   memberService.login( memberDto );
-          if( loginDto !=null ){
-              HttpSession session = request.getSession();   // 서버내 세션 가져오기
-              session.setAttribute( "logindto" , loginDto );    // 세션 설정
-              // session.getAttribute("logindto") ; // 세션 호출
-              return "1";
-          }else{
-              return "2";
-          }
-            // 타임리프를 설치했을경우  RETRUN URL , HTML
-            // html 혹은 url 아닌 값 반환할때  @ResponseBody
-    }
+//    // 로그인처리 [ 스프링시큐리티 사용시 로그인처리 메소드 제공 받기 때문에 사용X ]
+//    @PostMapping("/member/logincontroller")
+//    @ResponseBody
+//    public String logincontroller( @RequestBody MemberDto memberDto ){
+//                                             // 폼 사용시에는 자동주입 O
+//                                             // AJAX 사용시에는 자동주입 X -> @RequestBody
+//          MemberDto loginDto =   memberService.login( memberDto );
+//          if( loginDto !=null ){
+//              HttpSession session = request.getSession();   // 서버내 세션 가져오기
+//              session.setAttribute( "logindto" , loginDto );    // 세션 설정
+//              // session.getAttribute("logindto") ; // 세션 호출
+//              return "1";
+//          }else{
+//              return "2";
+//          }
+//            // 타임리프를 설치했을경우  RETRUN URL , HTML
+//            // html 혹은 url 아닌 값 반환할때  @ResponseBody
+//    }
 
-    // 로그아웃 처리
-    @GetMapping("/member/logout")
-    public String logout(){
-        HttpSession session = request.getSession();
-        session.setAttribute( "logindto" , null);   // 기존 세션을 null 로 변경
-        return "redirect:/"; // 로그아웃 성공시 메인페이지로 이동
-    }
+//    // 로그아웃 처리
+//    @GetMapping("/member/logout")
+//    public String logout(){
+//        HttpSession session = request.getSession();
+//        session.setAttribute( "logindto" , null);   // 기존 세션을 null 로 변경
+//        return "redirect:/"; // 로그아웃 성공시 메인페이지로 이동
+//    }
 
     // 회원정보찾기 페이지로 연결
     @GetMapping("/member/findid")

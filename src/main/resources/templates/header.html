@@ -34,7 +34,9 @@
                 <li><a th:if="${session.logindto != null }" th:href="@{/member/notelist}" class="nav-link px-2 link-dark" th:text="${ ' 쪽지 (' + session.nreadcount +')' }"></a></li>
             </ul>
             <div class="col-md-3 text-end">
-                <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인</button>
+                <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인모달</button>
+
+                <a th:if="${session.logindto == null }" th:href="@{/member/login}"><button type="button" class="btn btn-outline-info"> 로그인페이지 </button></a>
                 <a th:if="${session.logindto == null }" th:href="@{/member/signup}"><button type="button" class="btn btn-outline-info">회원가입</button></a>
                 <a th:if="${session.logindto != null }" th:href="@{/member/info}"><button type="button" class="btn btn-outline-info">마이페이지</button></a>
                 <a th:if="${session.logindto != null }" th:href="@{/member/logout}"><button type="button" class="btn btn-outline-info">로그아웃</button></a>

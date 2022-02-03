@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +21,8 @@ import java.util.Optional;
 import java.util.Random;
 
 @Service
-public class MemberService {
-
+public class MemberService implements UserDetailsService {
+                                                            // 로그인 [ 인증 ] 절차 지원 인터페이스
     @Autowired
     MemberRepository memberRepository ;
 
@@ -179,6 +182,15 @@ public class MemberService {
                 = memberRepository.findById(mnum);
         return  entityOptional.get();
     }
+
+    @Override   // /member/logincontroller URL 호출시 실행되는 메소드 [ 로그인처리(인증처리) 메소드 ]
+    public UserDetails loadUserByUsername(String mid ) throws UsernameNotFoundException {
+
+        System.out.println( "로그인시 입력된 아이디 : " +  mid );
+
+        return null;
+    }
+
 }
 
 
