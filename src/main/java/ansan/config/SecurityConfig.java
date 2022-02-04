@@ -50,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
                 .oauth2Login()  // oauth2 로그인 설정
                 .userInfoEndpoint()
                 .userService( oauthService ); // oauth2 서비스
-
     }
 
     @Autowired

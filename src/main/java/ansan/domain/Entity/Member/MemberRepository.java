@@ -9,7 +9,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity , Integer> 
     // 엔티티 검색  findby필드명
     Optional<MemberEntity> findBymid(String mid);
 
-    Optional<MemberEntity> findByemail(String email);
+//    Optional<MemberEntity> findByemail(String email);
 
     // 기본키로 엔티티 검색[ 기본 ]
         // Optional<MemberEntity> findByid(String mid);

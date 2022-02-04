@@ -34,7 +34,6 @@ public class Oauth2Dto {
         if( registrationid.equals("kakao")){   return ofkakao(    nameattributekey , attribute  ); }   // 카카오
         else if( registrationid.equals("naver") ){ return null;} // 네이버
         else{ return null;} // 구글
-
     }
 
     // 카카오 정보 dto 변환 메소드
@@ -52,6 +51,6 @@ public class Oauth2Dto {
     }
     // 첫 로그인했을때 회원가입 dto -> entitiy
     public MemberEntity toEntity(){
-        return MemberEntity.builder().m_name(this.name).memail(this.email).m_grade(Role.MEMBER).build();
+        return MemberEntity.builder().m_name(name).memail(email).m_grade(Role.MEMBER).build();
     }
 }
