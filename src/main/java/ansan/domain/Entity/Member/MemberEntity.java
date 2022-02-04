@@ -50,4 +50,10 @@ public class MemberEntity extends BaseTimeEntity {
     @OneToMany( mappedBy ="memberEntity" )
     private List<NoteEntity> noteEntities = new ArrayList<>();
 
+    // oauth2 에서 동일한 이메일이면 업데이트처리 메소드
+    public MemberEntity update(String name){
+        this.m_name = name;
+        return this;
+    }
+
 }

@@ -11,14 +11,10 @@ import java.util.Map;
 @Getter@Setter
 public class Oauth2Dto {
 
-    // 이름
-    String name;
-    // 이메일
-    String email;
-    // 회원정보
-    private Map<String , Object> attribute;
-    // 요청 토큰[키]
-    private String nameattributekey;
+    String name;   // 이름
+    String email;     // 이메일
+    private Map<String , Object> attribute;     // 회원정보
+    private String nameattributekey;   // 요청 토큰[키]
 
     // 풀생성자
     @Builder
@@ -28,14 +24,12 @@ public class Oauth2Dto {
         this.attribute = attribute;
         this.nameattributekey = nameattributekey;
     }
-
     // 클라이언트 구분용 메소드 [ 카카오 or 네이버 or 구글 ]
     public static Oauth2Dto of( String registrationid , String nameattributekey , Map<String, Object> attribute){
         if( registrationid.equals("kakao")){   return ofkakao(    nameattributekey , attribute  ); }   // 카카오
         else if( registrationid.equals("naver") ){ return null;} // 네이버
         else{ return null;} // 구글
     }
-
     // 카카오 정보 dto 변환 메소드
     private static Oauth2Dto ofkakao( String nameattributekey ,Map<String, Object> attribute  ){
 

@@ -36,7 +36,7 @@
             <div class="col-md-3 text-end">
                 <!-- 세션과 동일하게 인증 정보 호출 -->
 <!--                <div sec:authorize="isAuthenticated()">-->
-<!--                    <span sec:authentication="principal.mid"></span>님 안녕하세요-->
+<!--                    <span sec:authentication="principal.name"></span>님 안녕하세요-->
 <!--                </div>-->
 
                 <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인모달</button>
