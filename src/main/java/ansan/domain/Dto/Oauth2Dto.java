@@ -27,14 +27,26 @@ public class Oauth2Dto {
     // 클라이언트 구분용 메소드 [ 카카오 or 네이버 or 구글 ]
     public static Oauth2Dto of( String registrationid , String nameattributekey , Map<String, Object> attribute){
         if( registrationid.equals("kakao")){   return ofkakao(    nameattributekey , attribute  ); }   // 카카오
-        else if( registrationid.equals("naver") ){ return null;} // 네이버
+        else if( registrationid.equals("naver") ){ return ofnaver(    nameattributekey , attribute  );} // 네이버
         else{ return null;} // 구글
+    }
+    // 네이버 정보 dto 변환 메소드
+    private static Oauth2Dto ofnaver( String nameattributekey ,Map<String, Object> attribute  ){
+
+        Map<String, Object> response = (Map<String, Object>) attribute.get("response"); // response 키 호출
+
+        return Oauth2Dto.builder()
+                .name( (String) response.get("name") )
+                .email((String) response.get("email"))
+                .attribute( attribute )
+                .nameattributekey( nameattributekey )
+                .build();
     }
     // 카카오 정보 dto 변환 메소드
     private static Oauth2Dto ofkakao( String nameattributekey ,Map<String, Object> attribute  ){
 
-        Map<String, Object> kakao_account = (Map<String, Object>) attribute.get("kakao_account");
-        Map<String,Object> profile = (Map<String, Object>) kakao_account.get("profile");
+        Map<String, Object> kakao_account = (Map<String, Object>) attribute.get("kakao_account"); // kakao_account 키 호출
+        Map<String,Object> profile = (Map<String, Object>) kakao_account.get("profile"); // kakao_account 키 호출
 
         return Oauth2Dto.builder()
                 .name( (String) profile.get("nickname") )
