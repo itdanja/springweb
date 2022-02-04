@@ -15,6 +15,11 @@ public class IndexController {
         return "main";
     }
 
+    @GetMapping("/error")
+    public String error(){
+        return "error";
+    }
+
     @Autowired
     private RoomService roomService;
 

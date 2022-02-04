@@ -38,6 +38,7 @@
                 <div sec:authorize="isAuthenticated()">
                     <span sec:authentication="principal.mid"></span>님 안녕하세요
                 </div>
+
                 <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인모달</button>
                 <a th:if="${session.logindto == null }" th:href="@{/member/login}"><button type="button" class="btn btn-outline-info"> 로그인페이지 </button></a>
                 <a th:if="${session.logindto == null }" th:href="@{/member/signup}"><button type="button" class="btn btn-outline-info">회원가입</button></a>
