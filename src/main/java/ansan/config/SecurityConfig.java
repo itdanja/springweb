@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
                     .invalidateHttpSession(true) // 세션 초기화
                 .and()
                     .exceptionHandling() // 예외[오류] 페이지 설정
-                    .accessDeniedPage("/error") ; // 오류 페이지 발생시 -> 오류페이지 URL
+                    .accessDeniedPage("/error"); // 오류 페이지 발생시 -> 오류페이지 URL
+
     }
 
     @Autowired
@@ -54,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {  // 인증 관련 보안
         auth.userDetailsService(memberService).passwordEncoder( passwordEncoder());
     }
+
     @Autowired
     public PasswordEncoder passwordEncoder(){   // 패스워드 암호화 관련 클래스
         return new BCryptPasswordEncoder();
