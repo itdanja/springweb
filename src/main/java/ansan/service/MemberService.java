@@ -69,7 +69,7 @@ public class MemberService implements UserDetailsService {
         for( MemberEntity memberEntity  :  memberEntities){
             // 3. 만약에 해당 엔티티가 이름과 이메일이 동일하면
             if( memberEntity.getM_name().equals(memberDto.getM_name()) &&
-                memberEntity.getM_email().equals( memberDto.getM_email() )){
+                memberEntity.getMemail().equals( memberDto.getM_email() )){
                 // 4. 아이디를 반환한다
                 return memberEntity.getMid();
             }
@@ -108,7 +108,7 @@ public class MemberService implements UserDetailsService {
                     MimeMessage message = javaMailSender.createMimeMessage();
                     MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "utf-8");
                     mimeMessageHelper.setFrom("본인아이디", "Ansan");      // 보내는사람  //  이름
-                    mimeMessageHelper.setTo( memberEntity.getM_email() );                                                 //  받는사람
+                    mimeMessageHelper.setTo( memberEntity.getMemail() );                                                 //  받는사람
                     mimeMessageHelper.setSubject("Ansan 계정 임시 비밀번호 발송 ");                      // 메일 제목
                     mimeMessageHelper.setText(body.toString(), true);                                    // 메일 내용    // html 형식유무
                     javaMailSender.send(message);     // 메일 전송
@@ -142,7 +142,7 @@ public class MemberService implements UserDetailsService {
         // 2. 모든 엔티티 반복문 돌려서 엔티티 하나씩 가쟈오기
         for( MemberEntity memberEntity : memberEntities ) {
             // 3. 해당 엔티티가 입력한 아이디와 동일하면
-            if (memberEntity.getM_email().equals(email)) {
+            if (memberEntity.getMemail().equals(email)) {
                 return true; // 중복
             }
         }
@@ -160,7 +160,7 @@ public class MemberService implements UserDetailsService {
                     .m_id( entityOptional.get().getMid() )
                     .m_name( entityOptional.get().getM_name() )
                     .m_address( entityOptional.get().getM_address() )
-                    .m_email( entityOptional.get().getM_email() )
+                    .m_email( entityOptional.get().getMemail() )
                     .m_grade( entityOptional.get().getM_grade() )
                     .m_phone( entityOptional.get().getM_phone() )
                     .m_point( entityOptional.get().getM_point() )

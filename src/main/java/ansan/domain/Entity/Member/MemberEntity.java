@@ -28,7 +28,7 @@ public class MemberEntity extends BaseTimeEntity {
     @Column
     private String m_phone; // 회원연락처
     @Column
-    private String m_email; // 회원이메일
+    private String memail; // 회원이메일
     @Column
     private String m_address; // 회원주소
     @Column

@@ -1,6 +1,7 @@
 package ansan.config;
 
 import ansan.service.MemberService;
+import ansan.service.OauthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -44,9 +45,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
                     .invalidateHttpSession(true) // 세션 초기화
                 .and()
                     .exceptionHandling() // 예외[오류] 페이지 설정
-                    .accessDeniedPage("/error"); // 오류 페이지 발생시 -> 오류페이지 URL
+                    .accessDeniedPage("/error")   // 오류 페이지 발생시 -> 오류페이지 URL
+                .and()
+                .oauth2Login()  // oauth2 로그인 설정
+                .userInfoEndpoint()
+                .userService( oauthService ); // oauth2 서비스
 
     }
+
+    @Autowired
+    private OauthService oauthService;
 
     @Autowired
     private MemberService memberService;
