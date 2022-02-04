@@ -30,6 +30,7 @@ public class Oauth2Dto {
         else if( registrationid.equals("naver") ){ return ofnaver(    nameattributekey , attribute  );} // 네이버
         else{ return null;} // 구글
     }
+
     // 네이버 정보 dto 변환 메소드
     private static Oauth2Dto ofnaver( String nameattributekey ,Map<String, Object> attribute  ){
 
@@ -42,6 +43,7 @@ public class Oauth2Dto {
                 .nameattributekey( nameattributekey )
                 .build();
     }
+
     // 카카오 정보 dto 변환 메소드
     private static Oauth2Dto ofkakao( String nameattributekey ,Map<String, Object> attribute  ){
 

@@ -42,7 +42,9 @@ public class OauthService implements OAuth2UserService<OAuth2UserRequest , OAuth
         // DB 저장
         MemberEntity memberEntity= saveorupdate(oauth2Dto);
         // 세션 할당
-        MemberDto loginDto =   MemberDto.builder().m_id(memberEntity.getMid()).m_num( memberEntity.getM_num() ).build();
+            // 소셜로그인시 id가 없기때문에 이메일에서 @ 뒤를 제거한 아이디를 세션 담기
+            String snsid = memberEntity.getMemail().split("@")[0];
+        MemberDto loginDto =   MemberDto.builder().m_id( snsid ).m_num( memberEntity.getM_num() ).build();
         HttpSession session = request.getSession();   // 서버내 세션 가져오기
         session.setAttribute( "logindto" , loginDto );    // 세션 설정
 
@@ -62,16 +64,21 @@ public class OauthService implements OAuth2UserService<OAuth2UserRequest , OAuth
 
         // 1. memberRepository 이용한 동일한 이메일찾기. [ findBy필드명 -> 반환타입 : Optional
         MemberEntity memberEntity = memberRepository.findBymemail( oauth2Dto.getEmail() )
-                .map( entity -> entity.update( oauth2Dto.getName() ) )
-                // map( 임시객체명 -> 임시객체명.메소드 )  : 동일한 이메일이 있을경우
+                .map( entity -> entity.update( oauth2Dto.getName() ) )  // map( 임시객체명 -> 임시객체명.메소드 )  : 동일한 이메일이 있을경우 -> 특정 이벤트 수정
                 .orElse( oauth2Dto.toEntity() );    // orElse(  )  : 동일한 이메일이 없을경우 dto->entity
 
         // Optional 클래스
-            // 1. orElse( 해당 Optional객체 null 이면 )
-            // 2. map ( Optional객체 -> 메소드  ) : 여러개 있을경우 모두 처리
+        // 1. orElse 메소드 ( 해당 Optional객체 null 이면 )  값이 없을경우
+        // 2. map 메소드 ( Optional객체 -> 메소드  )  값이 있을경우에 수정 이벤트
+
+
+//  Optional 클래스 을 사용 안할경우
+//        MemberEntity memberEntity = memberRepository.findBymemail( oauth2Dto.getEmail() ).get();
+//
+//        if( memberEntity != null ) memberEntity.update( oauth2Dto.getName() );
+//        else if( memberEntity == null ) memberEntity = oauth2Dto.toEntity();
+//
 
         return memberRepository.save( memberEntity );
     }
-
-
 }
