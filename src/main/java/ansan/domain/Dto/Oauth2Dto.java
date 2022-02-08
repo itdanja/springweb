@@ -70,7 +70,7 @@ public class Oauth2Dto {
     }
     // 첫 로그인했을때 회원가입 dto -> entitiy
     public MemberEntity toEntity(){
-        return MemberEntity.builder().m_name(name).memail(email).m_grade(Role.MEMBER).mid( email.split("@")[0] ).build();
+        return MemberEntity.builder().m_name(name).memail(email).m_grade(Role.ADMIN).mid( email.split("@")[0] ).build();
     }
 }
 

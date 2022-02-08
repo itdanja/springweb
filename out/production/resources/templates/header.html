@@ -41,7 +41,7 @@
 
                     <li><a sec:authorize="isAuthenticated()"  th:href="@{/room/write}" class="nav-link px-2 link-dark">방등록 </a></li>
                     <!-- 권한이 있고 롤이 동일한 경우 메뉴 -->
-                    <li><a sec:authorize="hasRole('ADMIN')"  th:href="@{/admin/roomlist}" class="nav-link px-2 link-dark">관리자페이지 </a></li>
+                    <li><a sec:authorize="hasRole('MEMBER')"  th:href="@{/admin/roomlist}" class="nav-link px-2 link-dark">관리자페이지 </a></li>
 
             </ul>
             <div class="col-md-3 text-end">
