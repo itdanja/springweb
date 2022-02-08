@@ -27,24 +27,39 @@
                 Ansan
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a th:href="@{/board/boardlist(keyword=null , search=null )}" class="nav-link px-2 link-dark">커뮤니티 </a></li>
-                <li><a th:if="${session.logindto != null }" th:href="@{/room/write}" class="nav-link px-2 link-dark">방등록 </a></li>
-                <li><a th:if="${session.logindto != null }" th:href="@{/admin/roomlist}" class="nav-link px-2 link-dark">방리스트[관리자] </a></li>
-                <li><a th:href="@{/room/roomview}" class="nav-link px-2 link-dark"> 방 매물보기 </a></li>
-                <li><a th:if="${session.logindto != null }" th:href="@{/member/notelist}" class="nav-link px-2 link-dark" th:text="${ ' 쪽지 (' + session.nreadcount +')' }"></a></li>
+<!--                시큐리티 없이 세션으로 메뉴 분류 -->
+<!--                <li><a th:href="@{/board/boardlist(keyword=null , search=null )}" class="nav-link px-2 link-dark">커뮤니티 </a></li>-->
+<!--                <li><a th:if="${session.logindto != null }" th:href="@{/room/write}" class="nav-link px-2 link-dark">방등록 </a></li>-->
+<!--                <li><a th:if="${session.logindto != null }" th:href="@{/admin/roomlist}" class="nav-link px-2 link-dark">방리스트[관리자] </a></li>-->
+<!--                <li><a th:href="@{/room/roomview}" class="nav-link px-2 link-dark"> 방 매물보기 </a></li>-->
+<!--                <li><a th:if="${session.logindto != null }" th:href="@{/member/notelist}" class="nav-link px-2 link-dark" th:text="${ ' 쪽지 (' + session.nreadcount +')' }"></a></li>-->
+                    <!-- 권한이 없어도 보이는 메뉴 -->
+                    <li><a th:href="@{/room/roomview}" class="nav-link px-2 link-dark"> 방 매물보기 </a></li>
+                    <li><a th:href="@{/board/boardlist(keyword=null , search=null )}" class="nav-link px-2 link-dark">커뮤니티 </a>
+                    <!-- 권한이 있어야 보이는 메뉴 -->
+                    <li><a sec:authorize="isAuthenticated()"  th:href="@{/member/notelist}" class="nav-link px-2 link-dark" th:text="${ ' 쪽지 (' + session.nreadcount +')' }"></a></li>
+
+                    <li><a sec:authorize="isAuthenticated()"  th:href="@{/room/write}" class="nav-link px-2 link-dark">방등록 </a></li>
+                    <!-- 권한이 있고 롤이 동일한 경우 메뉴 -->
+                    <li><a sec:authorize="hasRole('ADMIN')"  th:href="@{/admin/roomlist}" class="nav-link px-2 link-dark">관리자페이지 </a></li>
+
             </ul>
             <div class="col-md-3 text-end">
-                <!-- 세션과 동일하게 인증 정보 호출 -->
-<!--                <div sec:authorize="isAuthenticated()">-->
-<!--                    <span sec:authentication="principal.name"></span>님 안녕하세요-->
-<!--                </div>-->
+<!--                시큐리티 없이 세션으로 메뉴 분류 -->
+<!--                <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인모달</button>-->
+<!--                <a th:if="${session.logindto == null }" th:href="@{/member/login}"><button type="button" class="btn btn-outline-info"> 로그인페이지 </button></a>-->
+<!--                <a th:if="${session.logindto == null }" th:href="@{/member/signup}"><button type="button" class="btn btn-outline-info">회원가입</button></a>-->
+<!--                <a th:if="${session.logindto != null }" th:href="@{/member/info}"><button type="button" class="btn btn-outline-info">마이페이지</button></a>-->
+<!--                <a th:if="${session.logindto != null }" th:href="@{/member/logout}"><button type="button" class="btn btn-outline-info">로그아웃</button></a>-->
+                <!-- 권한이 없어도 보이는 메뉴 -->
+                    <a sec:authorize="isAnonymous()"  th:href="@{/member/login}"><button type="button" class="btn btn-outline-info"> 로그인페이지 </button></a>
+                    <a sec:authorize="isAnonymous()"  th:href="@{/member/signup}"><button type="button" class="btn btn-outline-info">회원가입</button></a>
+                <!-- 권한이 있어야 보이는 메뉴 -->
+                    <div sec:authorize="isAuthenticated()"> <span th:if="${session.logindto != null}" th:text="${session.logindto.m_id}"></span>님 안녕하세요</div>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/member/info}"><button type="button" class="btn btn-outline-info">마이페이지</button></a>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}"><button type="button" class="btn btn-outline-info">로그아웃</button></a>
+                <!-- 권한이 있고 롤이 동일한 경우 메뉴 -->
 
-                <button th:if="${session.logindto == null }" type="button" class="btn btn-outline-info"  data-bs-target="#modallogin" data-bs-toggle="modal">로그인모달</button>
-                <a th:if="${session.logindto == null }" th:href="@{/member/login}"><button type="button" class="btn btn-outline-info"> 로그인페이지 </button></a>
-                <a th:if="${session.logindto == null }" th:href="@{/member/signup}"><button type="button" class="btn btn-outline-info">회원가입</button></a>
-                <a th:if="${session.logindto != null }" th:href="@{/member/info}"><button type="button" class="btn btn-outline-info">마이페이지</button></a>
-                <a th:if="${session.logindto != null }" th:href="@{/member/logout}"><button type="button" class="btn btn-outline-info">로그아웃</button></a>
-<!--                <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}"><button type="button" class="btn btn-outline-info">로그아웃[인가 제거]</button></a>-->
             </div>
         </header>
     </div>

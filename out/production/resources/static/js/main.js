@@ -7,12 +7,6 @@ $(function(){
     });
 });
 
-
-
-
-
-
-
 function login(){
 
     var m_id = $("#login_m_id").val();
