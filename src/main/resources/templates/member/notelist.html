@@ -17,13 +17,12 @@
                     <td th:text="${room.rname}"></td>
                     <td>
                             <div th:each = "note : ${room.noteEntities}">
-                                <span th:text="${ '보낸사람 : ' + note.memberEntity.m_id}"></span>
+                                <span th:text="${ '보낸사람 : ' + note.memberEntity.mid}"></span>
                                 <span th:text="${ '내용 : ' + note.ncontents}"></span>
                                 <span th:text="${ '보낸날짜 : ' + note.createdDate}"></span>
                                 <span th:if="${note.nreply != null}">답변완료 </span>
                                 <span th:if="${note.nreply == null}"><button th:onclick="notereply( [[${ note.nnum }]] , [[${ note.ncontents }]] )"> 답변하기 </button></span>
                                 <span th:text="${note.nread ==0} ? 안읽음 : 읽음 "></span>
-
                             </div>
                     </td>
                 </tr>

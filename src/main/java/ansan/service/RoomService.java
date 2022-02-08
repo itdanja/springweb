@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -162,8 +163,7 @@ public class RoomService {
     // nread : 0 안읽음     1: 읽음
     public void nreadcount(){
         HttpSession session = request.getSession();
-        MemberDto memberDto
-                = (MemberDto) session.getAttribute("logindto");
+        MemberDto memberDto= (MemberDto) session.getAttribute("logindto");
         if( memberDto == null ) return; // 로그인 안되어 있으면 제외
         int nreadcount = 0; // 안읽은 쪽지의 개수
         // 로그인된 회원번호와 쪽지받은사람의 회원번호가 모두 동일하면
@@ -183,6 +183,9 @@ public class RoomService {
         noteRepository.findById( nnum).get().setNread(1);
         return true;
     }
+
+
+
 }
 
 

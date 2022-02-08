@@ -28,7 +28,18 @@ public class Oauth2Dto {
     public static Oauth2Dto of( String registrationid , String nameattributekey , Map<String, Object> attribute){
         if( registrationid.equals("kakao")){   return ofkakao(    nameattributekey , attribute  ); }   // 카카오
         else if( registrationid.equals("naver") ){ return ofnaver(    nameattributekey , attribute  );} // 네이버
-        else{ return null;} // 구글
+        else{ return ofgoogle(    nameattributekey , attribute  );} // 구글
+    }
+
+    // 구글 정보 dto 변환 메소드
+    private static Oauth2Dto ofgoogle( String nameattributekey ,Map<String, Object> attribute  ){
+                                                                        // 인증키              //    회원정보
+        return Oauth2Dto.builder()
+                .name( (String) attribute.get("name") )        // 구글 회원 이름
+                .email((String) attribute.get("email"))          // 구글 회원 이메일
+                .attribute( attribute )                                  // 구글 회원정보
+                .nameattributekey( nameattributekey )        // 구글 인증 키
+                .build();
     }
 
     // 네이버 정보 dto 변환 메소드
@@ -59,6 +70,21 @@ public class Oauth2Dto {
     }
     // 첫 로그인했을때 회원가입 dto -> entitiy
     public MemberEntity toEntity(){
-        return MemberEntity.builder().m_name(name).memail(email).m_grade(Role.MEMBER).build();
+        return MemberEntity.builder().m_name(name).memail(email).m_grade(Role.MEMBER).mid( email.split("@")[0] ).build();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

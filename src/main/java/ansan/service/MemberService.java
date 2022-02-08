@@ -5,6 +5,8 @@ import ansan.domain.Dto.MemberDto;
 import ansan.domain.Entity.Member.MemberEntity;
 import ansan.domain.Entity.Member.MemberRepository;
 import ansan.domain.Entity.Member.Role;
+import ansan.domain.Entity.Room.NoteEntity;
+import ansan.domain.Entity.Room.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
@@ -192,6 +194,9 @@ public class MemberService implements UserDetailsService {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private NoteRepository noteRepository;
+
     @Override   // /member/logincontroller URL 호출시 실행되는 메소드 [ 로그인처리(인증처리) 메소드 ]
     public UserDetails loadUserByUsername(String mid ) throws UsernameNotFoundException {
 
@@ -213,6 +218,8 @@ public class MemberService implements UserDetailsService {
         // 회원정보와 권한을 갖는 UserDetails 반환
         return new IntergratedDto( memberEntity , authorities );
     }
+
+
 
 }
 
